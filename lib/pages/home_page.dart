@@ -37,22 +37,31 @@ class HomePage extends StatelessWidget {
             ]),
           ),
           SliverList(
-            delegate: SliverChildListDelegate([
-              SubjectCard(
-                icon: Icons.pets,
-                name: 'Math',
-              ),
-              SubjectCard(
-                icon: Icons.phone,
-                name: 'English',
-              ),
-              SubjectCard(
+            delegate: SliverChildBuilderDelegate((context, index) {
+              return SubjectCard(
                 icon: Icons.book,
                 name: 'Swahili',
-              )
-            ]),
+              );
+            }, childCount: 10),
           )
         ],
+      ),
+      bottomNavigationBar: BottomAppBar(
+        child: Row(
+          children: <Widget>[
+            Spacer(),
+            Container(
+              width: MediaQuery.of(context).size.width / 2,
+              child: RaisedButton(
+                child: Text('Subscribe'),
+                onPressed: () {
+                  print('Go n subscribe');
+                },
+              ),
+            ),
+            Spacer(),
+          ],
+        ),
       ),
       drawer: Container(),
     );
