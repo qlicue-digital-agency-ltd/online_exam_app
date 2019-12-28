@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:online_exam_app/views/screens/rank_board_screen.dart';
 
 class RankPage extends StatelessWidget {
   @override
@@ -24,6 +25,14 @@ class RankPage extends StatelessWidget {
               )
             ],
           ),
+        ),
+        body: TabBarView(
+          children: <Widget>[
+            RankBoardScreen(),
+            RankBoardScreen(),
+            RankBoardScreen(),
+            RankBoardScreen(),
+          ],
         ),
       ),
       length: 4,
