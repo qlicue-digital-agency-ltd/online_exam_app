@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:online_exam_app/model/subject.dart';
-import 'package:online_exam_app/views/pages/paper_page.dart';
 
 class MyResultsCard extends StatelessWidget {
   final Subject subject;

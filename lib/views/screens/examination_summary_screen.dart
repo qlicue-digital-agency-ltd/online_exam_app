@@ -21,7 +21,7 @@ class ExaminationSummaryScreen extends StatelessWidget {
             SizedBox(
               height: 10,
             ),
-            Image.asset('assets/icon/books.png'),
+            Image.asset('assets/icon/bookshow.png'),
             SizedBox(
               height: 20,
             ),
@@ -39,7 +39,7 @@ class ExaminationSummaryScreen extends StatelessWidget {
             SizedBox(
               height: 10,
             ),
-            Image.asset('assets/icon/books.png'),
+            Image.asset('assets/icon/star.png'),
             Text('Congraturations',
                 style: TextStyle(fontSize: 18, color: Colors.green)),
             CustomDoubleButtons(

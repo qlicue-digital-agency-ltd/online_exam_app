@@ -13,7 +13,7 @@ class ResultBoardScren extends StatelessWidget {
             SizedBox(
               height: 50,
             ),
-            Image.asset('assets/icon/chemistry.png'),
+            Image.asset('assets/icon/trophy.png'),
             SizedBox(
               height: 10,
             ),
