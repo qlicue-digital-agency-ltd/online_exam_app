@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:online_exam_app/pages/home_page.dart';
+
+import 'package:online_exam_app/views/pages/home_page.dart';
 import 'package:scoped_model/scoped_model.dart';
 
 import 'model/scoped/main.dart';

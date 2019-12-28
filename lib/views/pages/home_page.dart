@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:online_exam_app/components/cards/dashboard_card.dart';
-import 'package:online_exam_app/components/cards/subject_card.dart';
+
 import 'package:online_exam_app/model/subject.dart';
-import 'package:online_exam_app/pages/paper_page.dart';
+import 'package:online_exam_app/views/components/cards/dashboard_card.dart';
+import 'package:online_exam_app/views/components/cards/subject_card.dart';
+import 'package:online_exam_app/views/pages/paper_page.dart';
+
 
 class HomePage extends StatelessWidget {
   final double _appBarHeight = 150.0;
@@ -17,7 +19,7 @@ class HomePage extends StatelessWidget {
               pinned: true,
               expandedHeight: _appBarHeight,
               flexibleSpace: FlexibleSpaceBar(
-                title: const Text('EXAM APP'),
+                title: const Text('SPE APP'),
                 background: Stack(
                   fit: StackFit.expand,
                   children: <Widget>[
