@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:online_exam_app/model/subject.dart';
+import 'package:online_exam_app/views/components/cards/past_paper_card.dart';
 
 class PastPaperPage extends StatelessWidget {
   @override
@@ -10,12 +12,11 @@ class PastPaperPage extends StatelessWidget {
       body: Padding(
         padding: const EdgeInsets.all(10.0),
         child: GridView.builder(
-            itemCount: 6,
-            gridDelegate:
-                new SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2, crossAxisSpacing: 5, mainAxisSpacing: 5),
-            itemBuilder: (BuildContext context, int index) => Container(
-                  color: Colors.teal,
-                 
+            itemCount: subjectList.length,
+            gridDelegate: new SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2, crossAxisSpacing: 5, mainAxisSpacing: 5),
+            itemBuilder: (BuildContext context, int index) => PastPaperCard(
+                  subject: subjectList[index],
                 )),
       ),
     );
