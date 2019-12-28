@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:online_exam_app/model/subject.dart';
 import 'package:online_exam_app/views/components/cards/dashboard_card.dart';
 import 'package:online_exam_app/views/components/cards/subject_card.dart';
+import 'package:online_exam_app/views/pages/drawer_page.dart';
 import 'package:online_exam_app/views/pages/paper_page.dart';
-
 
 class HomePage extends StatelessWidget {
   final double _appBarHeight = 150.0;
@@ -14,7 +14,6 @@ class HomePage extends StatelessWidget {
       body: CustomScrollView(
         slivers: <Widget>[
           SliverAppBar(
-           
               floating: true,
               pinned: true,
               expandedHeight: _appBarHeight,
@@ -102,7 +101,9 @@ class HomePage extends StatelessWidget {
           ],
         ),
       ),
-      drawer: Container(),
+      drawer: Container(
+          width: MediaQuery.of(context).size.width * .85,
+          child: DrawerPage()),
     );
   }
 }

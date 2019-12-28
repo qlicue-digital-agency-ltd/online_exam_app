@@ -7,6 +7,7 @@ import 'package:online_exam_app/views/components/cards/answer_card.dart';
 import 'package:online_exam_app/views/components/cards/exam_header_card.dart';
 import 'package:online_exam_app/views/components/cards/question_card.dart';
 import 'package:online_exam_app/views/screens/examination_summary_screen.dart';
+import 'package:online_exam_app/views/screens/result_board_screen.dart';
 import 'package:scoped_model/scoped_model.dart';
 
 class PaperPage extends StatelessWidget {
@@ -61,11 +62,16 @@ class PaperPage extends StatelessWidget {
                 }, childCount: model.answerList.length),
               ),
               SliverList(
-                delegate: SliverChildListDelegate([ExaminationSummaryScreen()]),
+                delegate: SliverChildListDelegate(
+                    [ExaminationSummaryScreen(), ResultBoardScren()]),
               )
             ],
           ),
-          bottomNavigationBar: BottomAppBar(child: CustomDoubleButtons(titleButtonOne: 'PREV', titleButtonTwo: 'NEXT',)),
+          bottomNavigationBar: BottomAppBar(
+              child: CustomDoubleButtons(
+            titleButtonOne: 'PREV',
+            titleButtonTwo: 'NEXT',
+          )),
         );
       },
     );
