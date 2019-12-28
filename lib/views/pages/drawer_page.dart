@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:online_exam_app/views/pages/my_results_page.dart';
 import 'package:online_exam_app/views/pages/past_paper_page.dart';
 import 'package:online_exam_app/views/pages/rank_page.dart';
 
@@ -33,7 +34,7 @@ class DrawerPage extends StatelessWidget {
               ListTile(
                 onTap: () {
                   Navigator.pop(context);
-                      Navigator.push(
+                  Navigator.push(
                       context,
                       MaterialPageRoute(
                           builder: (BuildContext context) => PastPaperPage()));
@@ -48,6 +49,10 @@ class DrawerPage extends StatelessWidget {
               ListTile(
                 onTap: () {
                   Navigator.pop(context);
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (BuildContext context) => MyResultsPage()));
                 },
                 leading: Icon(
                   Icons.folder_open,
