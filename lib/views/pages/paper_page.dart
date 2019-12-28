@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 
 import 'package:online_exam_app/model/scoped/main.dart';
 import 'package:online_exam_app/model/subject.dart';
+import 'package:online_exam_app/views/components/buttons/custom_double_buttons.dart';
 import 'package:online_exam_app/views/components/cards/answer_card.dart';
 import 'package:online_exam_app/views/components/cards/exam_header_card.dart';
 import 'package:online_exam_app/views/components/cards/question_card.dart';
+import 'package:online_exam_app/views/screens/examination_summary_screen.dart';
 import 'package:scoped_model/scoped_model.dart';
 
 class PaperPage extends StatelessWidget {
@@ -57,47 +59,13 @@ class PaperPage extends StatelessWidget {
                     ),
                   );
                 }, childCount: model.answerList.length),
+              ),
+              SliverList(
+                delegate: SliverChildListDelegate([ExaminationSummaryScreen()]),
               )
             ],
           ),
-          bottomNavigationBar: BottomAppBar(
-            child: Row(
-              children: <Widget>[
-                Expanded(
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Container(
-                      decoration: BoxDecoration(
-                          color: Colors.green[500],
-                          borderRadius: BorderRadius.circular(10)),
-                      height: 50,
-                      child: Center(
-                          child: Text(
-                        'PREV',
-                        style: TextStyle(color: Colors.white),
-                      )),
-                    ),
-                  ),
-                ),
-                Expanded(
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Container(
-                      decoration: BoxDecoration(
-                          color: Colors.green[500],
-                          borderRadius: BorderRadius.circular(10)),
-                      height: 50,
-                      child: Center(
-                          child: Text(
-                        'NEXT',
-                        style: TextStyle(color: Colors.white),
-                      )),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
+          bottomNavigationBar: BottomAppBar(child: CustomDoubleButtons(titleButtonOne: 'PREV', titleButtonTwo: 'NEXT',)),
         );
       },
     );
