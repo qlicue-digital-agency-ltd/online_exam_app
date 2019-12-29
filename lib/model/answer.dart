@@ -31,10 +31,11 @@ class Answer {
   }
 
   Answer.fromMap(Map<String, dynamic> map)
-      : assert(map[id] != null),
+      : assert(map['id'] != null),
         id = map['id'],
-        content = map['content'],
+        content = map['content'].toString(),
         alphabet = map['alphabet'],
-        isCorrect = map['is_correct'],
-        questionId = map['question_id'];
+        isCorrect = map['is_correct'] == 1 ? true : false,
+        questionId = map['question_id'],
+        isSelected = false;
 }

@@ -10,18 +10,33 @@ import 'package:online_exam_app/views/screens/examination_summary_screen.dart';
 import 'package:online_exam_app/views/screens/result_board_screen.dart';
 import 'package:scoped_model/scoped_model.dart';
 
-class PaperPage extends StatelessWidget {
+class PaperPage extends StatefulWidget {
   final Examination examination;
+  final MainModel model;
 
-  const PaperPage({Key key, @required this.examination}) : super(key: key);
+  const PaperPage({Key key, @required this.examination, @required this.model})
+      : super(key: key);
+
+  @override
+  _PaperPageState createState() => _PaperPageState();
+}
+
+class _PaperPageState extends State<PaperPage> {
+  @override
+  void initState() {
+    widget.model.setAvailableQuestions = widget.examination.id;
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return ScopedModelDescendant(
       builder: (BuildContext context, Widget child, MainModel model) {
-        return Scaffold(
+        var scaffold = Scaffold(
           appBar: AppBar(
-            title: Text(
-                model.getSubjectById(subjectId: examination.subjectId).name),
+            title: Text(model
+                .getSubjectById(subjectId: widget.examination.subjectId)
+                .name),
           ),
           body: CustomScrollView(
             slivers: <Widget>[
@@ -55,15 +70,16 @@ class PaperPage extends StatelessWidget {
                   return Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: AnswerCard(
-                      answer: model.avaibleAnswers[index],
+                      answer: model.availableAnswers[index],
                       onTap: () {
                         model.setPreferredAnswer =
-                            model.avaibleAnswers[index].id;
+                            model.availableAnswers[index].id;
                       },
                     ),
                   );
-                }, childCount: model.avaibleAnswers.length),
+                }, childCount: model.availableAnswers.length),
               ),
+              
               SliverList(
                 delegate: SliverChildListDelegate(
                     [ExaminationSummaryScreen(), ResultBoardScren()]),
@@ -74,8 +90,15 @@ class PaperPage extends StatelessWidget {
               child: CustomDoubleButtons(
             titleButtonOne: 'PREV',
             titleButtonTwo: 'NEXT',
+            buttonOneTap: () {
+              print('PREV');
+            },
+            buttonTwoTap: () {
+              print('NEXT');
+            },
           )),
         );
+        return scaffold;
       },
     );
   }

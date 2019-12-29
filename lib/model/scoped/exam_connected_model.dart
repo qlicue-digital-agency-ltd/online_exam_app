@@ -27,26 +27,27 @@ mixin SubjectModel on ConnectedExamModel {
   Subject getSubjectById({@required subjectId}) {
     Subject _subject;
     try {
-      _availableSubjectList.firstWhere((subject) => subject.id == subjectId);
+      _subject = _availableSubjectList
+          .firstWhere((subject) => subject.id == subjectId);
     } catch (e) {
       print(e);
     }
-
+    print(_subject);
     return _subject;
   }
 }
 mixin ExamModel on ConnectedExamModel {
   ///list of examinations
-  List<Examination> _avaibleExaminations = [];
+  List<Examination> _availableExaminations = [];
 
   ///list of Questions of a particular exam
-  List<Question> _avaibleQuestions = [];
+  List<Question> _availableQuestions = [];
 
   ///list of answers of a particular question
-  List<Answer> _avaibleAnswers = [];
+  List<Answer> _availableAnswers = [];
 
   ///list of results of a particular student
-  List<Result> _avaibleResults = [];
+  List<Result> _availableResults = [];
 
   ///current question
   Question _currentQuestion;
@@ -55,39 +56,61 @@ mixin ExamModel on ConnectedExamModel {
   Question get currentQuestion => _currentQuestion;
 
   ///gtter List of examinations
-  List<Examination> get avaibleExaminations => _avaibleExaminations;
+  List<Examination> get availableExaminations => _availableExaminations;
 
   ///getter of list of Questions of a particular exam
-  List<Question> get avaibleQuestions => _avaibleQuestions;
+  List<Question> get availableQuestions => _availableQuestions;
 
   ///getter of list of answers of a particular question
-  List<Answer> get avaibleAnswers => _avaibleAnswers;
+  List<Answer> get availableAnswers => _availableAnswers;
 
   ///getter of list of results of a particular student
-  List<Result> get avaibleResults => _avaibleResults;
+  List<Result> get availableResults => _availableResults;
 
-  set setQuestion(questionId) {
+  ///setters
+  set setAvailableExamination(int subjectId) {
+    _availableExaminations = _availableSubjectList
+        .firstWhere((subject) => subject.id == subjectId)
+        .examinations;
+    notifyListeners();
+  }
+
+  set setAvailableQuestions(int examinationId) {
+    _availableQuestions = _availableExaminations
+        .firstWhere((examination) => examination.id == examinationId)
+        .questions;
+    _currentQuestion = _availableQuestions.first;
+    _availableAnswers = _availableQuestions.first.answers;
+    notifyListeners();
+  }
+
+  set setQuestion(int questionId) {
     Question _question;
     try {
       _question =
-          _avaibleQuestions.firstWhere((question) => question.id == questionId);
-      _avaibleAnswers = _question.answers;
+          _availableQuestions.firstWhere((question) => question.id == 1);
+      _availableAnswers = _question.answers;
     } catch (e) {
       print(e);
     }
+    print('+++++++++');
+    print(_question);
+    print('+++++++++');
     _currentQuestion = _question;
     notifyListeners();
   }
 
-  set setPreferredAnswer(id) {
-    // bool _status = !_answerList.firstWhere((race) => race.id == id).isSelected;
-    // _answerList.forEach((answer) {
-    //   if (answer.id == id) {
-    //     answer.isSelected = _status;
-    //   } else {
-    //     answer.isSelected = false;
-    //   }
-    // });
-    // notifyListeners();
+  set setPreferredAnswer(int answerId) {
+    bool _status = !_availableAnswers
+        .firstWhere((answer) => answer.id == answerId)
+        .isSelected;
+    _availableAnswers.forEach((answer) {
+      if (answer.id == answerId) {
+        answer.isSelected = _status;
+      } else {
+        answer.isSelected = false;
+      }
+    });
+    notifyListeners();
   }
 }

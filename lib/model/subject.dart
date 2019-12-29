@@ -25,7 +25,9 @@ class Subject {
   }
 
   Subject.fromMap(Map<String, dynamic> map)
-      : assert(map[id] != null),
+      : assert(map['id'] != null),
+        assert(map['name'] != null),
+        assert(map['code'] != null),
         id = map['id'],
         name = map['name'],
         code = map['code'],

@@ -67,24 +67,39 @@ class HomePage extends StatelessWidget {
                       child: DashboardCard())
                 ]),
               ),
-              SliverList(
-                delegate: SliverChildBuilderDelegate((context, index) {
-                  return Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: SubjectCard(
-                      subject: model.availableSubjects[index],
-                      icon: 'assets/icon/books.png',
-                      onTap: () => Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (BuildContext context) => PaperPage(
-                                    examination: model.availableSubjects[index]
-                                        .examinations.first,
-                                  ))),
-                    ),
-                  );
-                }, childCount: model.availableSubjects.length),
-              )
+              model.availableSubjects.isNotEmpty
+                  ? SliverList(
+                      delegate: SliverChildBuilderDelegate((context, index) {
+                        return Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: SubjectCard(
+                              subject: model.availableSubjects[index],
+                              icon: 'assets/icon/books.png',
+                              onTap: () {
+                                model.setAvailableExamination =
+                                    model.availableSubjects[index].id;
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (BuildContext context) =>
+                                            PaperPage(
+                                              examination: model
+                                                  .availableExaminations.first,
+                                              model: model,
+                                            )));
+                              }),
+                        );
+                      }, childCount: model.availableSubjects.length),
+                    )
+                  : SliverList(
+                      delegate: SliverChildListDelegate([
+                        Container(
+                          child: Center(
+                            child: Text('Pulling data from server'),
+                          ),
+                        )
+                      ]),
+                    )
             ],
           ),
           bottomNavigationBar: BottomAppBar(

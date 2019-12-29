@@ -41,7 +41,7 @@ class Examination {
   }
 
   Examination.fromMap(Map<String, dynamic> map)
-      : assert(map[id] != null),
+      : assert(map['id'] != null),
         id = map['id'],
         examNo = map['exam_no'],
         subjectId = map['subject_id'],

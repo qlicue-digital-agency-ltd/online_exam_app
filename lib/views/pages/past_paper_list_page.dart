@@ -22,7 +22,7 @@ class PastPaperListPage extends StatelessWidget {
             itemBuilder: (BuildContext context, int index) => Padding(
               padding: const EdgeInsets.all(8.0),
               child: PastPaperListCard(
-                examination: subject.examinations[index],
+                examination: subject.examinations[index], model: model,
               ),
             ),
           ),

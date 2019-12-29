@@ -14,7 +14,7 @@ class QuestionCard extends StatelessWidget {
             Expanded(
               child: RichText(
                   text: TextSpan(
-                      text: 'Qn ' + question.number.toString() + '. \t',
+                      text: 'Qn\t' + question.number.toString() + '. \t',
                       style: TextStyle(
                           color: Colors.black,
                           fontSize: 18,
@@ -28,10 +28,12 @@ class QuestionCard extends StatelessWidget {
             ),
           ],
         ),
-        Container(
-          padding: EdgeInsets.all(10),
-          child: Image.asset('assets/icon/abacus.png'),
-        ),
+        question.image != null
+            ? Container(
+                padding: EdgeInsets.all(10),
+                child: Image.asset('assets/icon/abacus.png'),
+              )
+            : Container(),
       ],
     );
   }

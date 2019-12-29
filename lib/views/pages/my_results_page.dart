@@ -14,11 +14,11 @@ class MyResultsPage extends StatelessWidget {
             title: Text('My Results'),
           ),
           body: ListView.builder(
-            itemCount: model.avaibleResults.length,
+            itemCount: model.availableResults.length,
             itemBuilder: (BuildContext context, int index) => Padding(
               padding: const EdgeInsets.all(8.0),
               child: MyResultsCard(
-                result: model.avaibleResults[index],
+                result: model.availableResults[index],
                 model: model,
               ),
             ),

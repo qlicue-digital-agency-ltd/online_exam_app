@@ -5,6 +5,7 @@ class Question {
   final int id;
   final int number;
   final String content;
+  final String image;
   final int examId;
   final List<Answer> answers;
 
@@ -12,6 +13,7 @@ class Question {
       {@required this.id,
       @required this.number,
       @required this.content,
+      @required this.image,
       @required this.examId,
       @required this.answers});
 
@@ -20,6 +22,7 @@ class Question {
       'content': content,
       'examination_id': examId,
       'number': number,
+      'image': image,
     };
     if (id != null) {
       map['id'] = id;
@@ -28,10 +31,11 @@ class Question {
   }
 
   Question.fromMap(Map<String, dynamic> map)
-      : assert(map[id] != null),
+      : assert(map['id'] != null),
         id = map['id'],
-        content = map['content'],
+        content = map['content'].toString(),
         number = map['number'],
+        image = map['image'],
         examId = map['examination_id'],
         answers = map['answers'] != null
             ? (map['answers'] as List).map((i) => Answer.fromMap(i)).toList()
