@@ -17,17 +17,18 @@ class PastPaperCard extends StatelessWidget {
                   ))),
       child: Card(
         elevation: 5,
-        color: subject.backgroundColor,
+        color: Colors.pink,
         child: Stack(
           children: <Widget>[
             Align(
-                alignment: Alignment.center, child: Image.asset(subject.icon)),
+                alignment: Alignment.center,
+                child: Image.asset('assets/icon/books.png')),
             Align(
                 alignment: Alignment.bottomCenter,
                 child: Padding(
                   padding: const EdgeInsets.only(bottom: 10),
                   child: Text(
-                    subject.title,
+                    subject.name,
                     style: TextStyle(
                         color: Colors.white,
                         fontWeight: FontWeight.w600,

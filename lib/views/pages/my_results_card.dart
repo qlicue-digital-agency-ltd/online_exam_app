@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:online_exam_app/model/subject.dart';
+import 'package:online_exam_app/model/result.dart';
+import 'package:online_exam_app/model/scoped/main.dart';
 
 class MyResultsCard extends StatelessWidget {
-  final Subject subject;
+  final Result result;
+  final MainModel model;
 
-  const MyResultsCard({Key key, @required this.subject}) : super(key: key);
+  const MyResultsCard({Key key, @required this.result, @required this.model})
+      : super(key: key);
   @override
   Widget build(BuildContext context) {
     return InkWell(
@@ -32,7 +35,10 @@ class MyResultsCard extends StatelessWidget {
               width: 5,
             ),
             Expanded(
-                child: Text("ENGLISH\n20/12/2019",
+                child: Text(
+                    model.getSubjectById(subjectId: result.subjectId).name +
+                        "\n" +
+                        result.date,
                     style: TextStyle(
                         fontSize: 15,
                         color: Colors.white,
@@ -40,7 +46,10 @@ class MyResultsCard extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Text(
-                "Position: 5/30",
+                "Position:\t" +
+                    result.postion.toString() +
+                    '/' +
+                    result.candidates.toString(),
                 style: TextStyle(
                     fontSize: 15,
                     color: Colors.white,

@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:online_exam_app/model/subject.dart';
+import 'package:online_exam_app/model/examination.dart';
 import 'package:online_exam_app/views/pages/paper_page.dart';
 
 class PastPaperListCard extends StatelessWidget {
-  final Subject subject;
+  final Examination examination;
 
-  const PastPaperListCard({Key key, @required this.subject}) : super(key: key);
+  const PastPaperListCard({Key key, @required this.examination})
+      : super(key: key);
   @override
   Widget build(BuildContext context) {
     return InkWell(
@@ -14,7 +15,7 @@ class PastPaperListCard extends StatelessWidget {
             context,
             MaterialPageRoute(
                 builder: (BuildContext context) => PaperPage(
-                      subject: subject,
+                      examination: examination,
                     )));
       },
       child: Container(

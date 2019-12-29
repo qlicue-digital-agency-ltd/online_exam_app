@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:online_exam_app/model/examination.dart';
 
 import 'package:online_exam_app/model/scoped/main.dart';
-import 'package:online_exam_app/model/subject.dart';
 import 'package:online_exam_app/views/components/buttons/custom_double_buttons.dart';
 import 'package:online_exam_app/views/components/cards/answer_card.dart';
 import 'package:online_exam_app/views/components/cards/exam_header_card.dart';
@@ -11,16 +11,17 @@ import 'package:online_exam_app/views/screens/result_board_screen.dart';
 import 'package:scoped_model/scoped_model.dart';
 
 class PaperPage extends StatelessWidget {
-  final Subject subject;
+  final Examination examination;
 
-  const PaperPage({Key key, @required this.subject}) : super(key: key);
+  const PaperPage({Key key, @required this.examination}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return ScopedModelDescendant(
       builder: (BuildContext context, Widget child, MainModel model) {
         return Scaffold(
           appBar: AppBar(
-            title: Text(subject.title),
+            title: Text(
+                model.getSubjectById(subjectId: examination.subjectId).name),
           ),
           body: CustomScrollView(
             slivers: <Widget>[
@@ -38,7 +39,9 @@ class PaperPage extends StatelessWidget {
                             Divider(
                               color: Colors.green,
                             ),
-                            QuestionCard(),
+                            QuestionCard(
+                              question: model.currentQuestion,
+                            ),
                             Divider(
                               color: Colors.green,
                             ),
@@ -52,14 +55,14 @@ class PaperPage extends StatelessWidget {
                   return Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: AnswerCard(
-                      answer: model.answerList[index],
-                      model: model,
+                      answer: model.avaibleAnswers[index],
                       onTap: () {
-                        model.setPreferredAnswer = model.answerList[index].id;
+                        model.setPreferredAnswer =
+                            model.avaibleAnswers[index].id;
                       },
                     ),
                   );
-                }, childCount: model.answerList.length),
+                }, childCount: model.avaibleAnswers.length),
               ),
               SliverList(
                 delegate: SliverChildListDelegate(

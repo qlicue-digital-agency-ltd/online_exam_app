@@ -1,19 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:online_exam_app/model/answer.dart';
-import 'package:online_exam_app/model/scoped/main.dart';
+
 
 typedef AnswerCardOnTap = Function();
 
 class AnswerCard extends StatelessWidget {
-  final MainModel model;
   final Answer answer;
   final AnswerCardOnTap onTap;
-  const AnswerCard(
-      {Key key,
-      @required this.answer,
-      @required this.onTap,
-      @required this.model})
-      : super(key: key);
+  const AnswerCard({
+    Key key,
+    @required this.answer,
+    @required this.onTap,
+  }) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return InkWell(

@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:online_exam_app/model/question.dart';
 
 class QuestionCard extends StatelessWidget {
+  final Question question;
+
+  const QuestionCard({Key key, @required this.question}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -10,15 +14,14 @@ class QuestionCard extends StatelessWidget {
             Expanded(
               child: RichText(
                   text: TextSpan(
-                      text: 'Qn 1. \t',
+                      text: 'Qn ' + question.number.toString() + '. \t',
                       style: TextStyle(
                           color: Colors.black,
                           fontSize: 18,
                           fontWeight: FontWeight.bold),
                       children: <TextSpan>[
                     TextSpan(
-                        text:
-                            '\nChocolate lemon drops muffin tart croissant sugar plum jelly-o lemon drops chocolate cake. Pie topping cupcake apple pie tootsie roll lemon drops. Pudding cupcake chocolate cake tiramisu gummies sweet halvah topping fruitcake. ?',
+                        text: '\n' + question.content,
                         style: TextStyle(
                             color: Colors.black, fontWeight: FontWeight.normal))
                   ])),

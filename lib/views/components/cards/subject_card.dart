@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:online_exam_app/model/subject.dart';
 
 typedef SubjectCardOnTap = Function();
 
 class SubjectCard extends StatelessWidget {
   final String icon;
-  final String title;
+  final Subject subject;
   final SubjectCardOnTap onTap;
 
   const SubjectCard(
       {Key key,
       @required this.icon,
-      @required this.title,
+      @required this.subject,
       @required this.onTap})
       : super(key: key);
   @override
@@ -31,7 +32,7 @@ class SubjectCard extends StatelessWidget {
               flex: 1,
             ),
             Expanded(
-              child: Text(title,
+              child: Text(subject.name,
                   style: TextStyle(color: Colors.white, fontSize: 20)),
               flex: 3,
             )
