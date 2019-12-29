@@ -50,7 +50,9 @@ class _PaperPageState extends State<PaperPage> {
                       child: Container(
                         child: Column(
                           children: <Widget>[
-                            ExamHeaderCard(),
+                            ExamHeaderCard(
+                              examination: widget.examination,
+                            ),
                             Divider(
                               color: Colors.green,
                             ),
@@ -79,7 +81,6 @@ class _PaperPageState extends State<PaperPage> {
                   );
                 }, childCount: model.availableAnswers.length),
               ),
-              
               SliverList(
                 delegate: SliverChildListDelegate(
                     [ExaminationSummaryScreen(), ResultBoardScren()]),
@@ -91,10 +92,13 @@ class _PaperPageState extends State<PaperPage> {
             titleButtonOne: 'PREV',
             titleButtonTwo: 'NEXT',
             buttonOneTap: () {
-              print('PREV');
+              model.previousQuestion();
             },
             buttonTwoTap: () {
-              print('NEXT');
+              if (model.currentQuestion.id !=
+                  model.availableQuestions.last.id) {
+                model.nextQuestion();
+              }
             },
           )),
         );

@@ -87,8 +87,8 @@ mixin ExamModel on ConnectedExamModel {
   set setQuestion(int questionId) {
     Question _question;
     try {
-      _question =
-          _availableQuestions.firstWhere((question) => question.id == 1);
+      _question = _availableQuestions
+          .firstWhere((question) => question.id == questionId);
       _availableAnswers = _question.answers;
     } catch (e) {
       print(e);
@@ -98,6 +98,28 @@ mixin ExamModel on ConnectedExamModel {
     print('+++++++++');
     _currentQuestion = _question;
     notifyListeners();
+  }
+
+  void nextQuestion() {
+    print('Next Question');
+    int index = _availableQuestions
+        .indexWhere((question) => question.id == _currentQuestion.id);
+
+    final _question = _availableQuestions[index + 1];
+
+    if (_question != null) setQuestion = _question.id;
+  }
+
+  void previousQuestion() {
+    print('Previous Question');
+    int index = _availableQuestions
+        .indexWhere((question) => question.id == _currentQuestion.id);
+
+    if (index != 0) {
+      final _question = _availableQuestions[index - 1];
+
+      if (_question != null) setQuestion = _question.id;
+    }
   }
 
   set setPreferredAnswer(int answerId) {
