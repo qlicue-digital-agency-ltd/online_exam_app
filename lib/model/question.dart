@@ -1,37 +1,35 @@
 import 'package:flutter/material.dart';
+import 'package:online_exam_app/model/answer.dart';
 
 class Question {
   final int id;
-
   final String content;
   final int examId;
+  final List<Answer> answers;
 
-  Question({
-    @required this.id,
-    @required this.content,
-    @required this.examId,
-  });
+  Question(
+      {@required this.id,
+      @required this.content,
+      @required this.examId,
+      @required this.answers});
+
+  Map<String, dynamic> toMap() {
+    var map = <String, dynamic>{
+      'content': content,
+      'examination_id': examId,
+    };
+    if (id != null) {
+      map['id'] = id;
+    }
+    return map;
+  }
+
+  Question.fromMap(Map<String, dynamic> map)
+      : assert(map[id] != null),
+        id = map['id'],
+        content = map['content'],
+        examId = map['examination_id'],
+        answers = map['answers'] != null
+            ? (map['answers'] as List).map((i) => Answer.fromMap(i)).toList()
+            : null;
 }
-
-List<Question> questionList = <Question>[
-  Question(
-      id: 1, content: 'Of what religion to you want them to be?', examId: 1),
-  Question(
-      id: 2,
-      content:
-          'What is your preferred age range for a person you would like to meet?',
-      examId: 1),
-  Question(
-      id: 3, content: 'Tell us of the height range you prefer?', examId: 1),
-  Question(
-      id: 4,
-      content:
-          'What is the least education level do you want this person to have?',
-      examId: 1),
-  Question(
-      id: 5, content: "Do you what a working class person or not ?", examId: 1),
-  Question(
-      id: 6,
-      content: "Last but not least, of what race should the person be?",
-      examId: 1)
-];

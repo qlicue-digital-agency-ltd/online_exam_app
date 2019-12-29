@@ -1,37 +1,37 @@
 import 'package:flutter/material.dart';
+import 'package:online_exam_app/model/examination.dart';
 
 class Subject {
-  final String icon;
-  final String title;
-  final Color backgroundColor;
+  final int id;
+  final String code;
+  final String name;
+  List<Examination> examinations;
 
-  Subject(
-      {@required this.icon,
-      @required this.title,
-      @required this.backgroundColor});
+  Subject({
+    @required this.id,
+    @required this.code,
+    @required this.name,
+  });
+
+  Map<String, dynamic> toMap() {
+    var map = <String, dynamic>{
+      'code': code,
+      'name': name,
+    };
+    if (id != null) {
+      map['id'] = id;
+    }
+    return map;
+  }
+
+  Subject.fromMap(Map<String, dynamic> map)
+      : assert(map[id] != null),
+        id = map['id'],
+        name = map['name'],
+        code = map['code'],
+        examinations = map['examinations'] != null
+            ? (map['examinations'] as List)
+                .map((i) => Examination.fromMap(i))
+                .toList()
+            : null;
 }
-
-List<Subject> subjectList = <Subject>[
-  Subject(
-      icon: 'assets/icon/books.png',
-      title: 'ENGLISH',
-      backgroundColor: Colors.red),
-  Subject(
-      icon: 'assets/icon/abacus.png',
-      title: 'MATHEMATICS',
-      backgroundColor: Colors.orange),
-  Subject(
-      icon: 'assets/icon/chemistry.png',
-      title: 'SCIENCE',
-      backgroundColor: Colors.pink),
-  Subject(
-      icon: 'assets/icon/books.png', title: 'ENGLISH', backgroundColor: Colors.indigo),
-  Subject(
-      icon: 'assets/icon/abacus.png',
-      title: 'MATHEMATICS',
-      backgroundColor: Colors.blue),
-  Subject(
-      icon: 'assets/icon/chemistry.png',
-      title: 'SCIENCE',
-      backgroundColor: Colors.cyan)
-];
