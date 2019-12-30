@@ -1,7 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:online_exam_app/constants/enums.dart';
+import 'package:online_exam_app/model/scoped/main.dart';
 import 'package:online_exam_app/views/components/buttons/custom_double_buttons.dart';
 
 class ExaminationSummaryScreen extends StatelessWidget {
+  final MainModel model;
+
+  const ExaminationSummaryScreen({Key key, @required this.model})
+      : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -45,8 +51,14 @@ class ExaminationSummaryScreen extends StatelessWidget {
             CustomDoubleButtons(
               titleButtonOne: 'Preview',
               titleButtonTwo: 'Submit',
+              buttonOneTap: () {
+                model.chageExamStatus(ExamStatus.OPENED);
+              },
+              buttonTwoTap: () {
+                model.chageExamStatus(ExamStatus.CLOSED);
+              },
             ),
-             SizedBox(
+            SizedBox(
               height: 10,
             ),
           ],

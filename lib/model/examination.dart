@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:online_exam_app/constants/enums.dart';
 import 'package:online_exam_app/model/question.dart';
 
 class Examination {
@@ -11,6 +12,7 @@ class Examination {
   final String openingTime;
   final String closingTime;
   final List<Question> questions;
+  ExamStatus examStatus;
 
   Examination({
     @required this.id,
@@ -22,6 +24,7 @@ class Examination {
     @required this.openingTime,
     @required this.closingTime,
     @required this.questions,
+    @required this.examStatus,
   });
 
   Map<String, dynamic> toMap() {
@@ -50,6 +53,7 @@ class Examination {
         duration = map['duration'],
         openingTime = map['opening_time'],
         closingTime = map['closing_time'],
+        examStatus = ExamStatus.OPENED,
         questions = map['questions'] != null
             ? (map['questions'] as List)
                 .map((i) => Question.fromMap(i))

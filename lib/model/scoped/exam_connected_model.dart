@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:online_exam_app/constants/enums.dart';
 import 'package:online_exam_app/model/answer.dart';
 import 'package:online_exam_app/model/examination.dart';
 import 'package:online_exam_app/model/question.dart';
@@ -52,8 +53,14 @@ mixin ExamModel on ConnectedExamModel {
   ///current question
   Question _currentQuestion;
 
+  ///current Examination
+  Examination _currentExamination;
+
   ///getter for the current question
   Question get currentQuestion => _currentQuestion;
+
+  ///getter for the current examination
+  Examination get currentExamination => _currentExamination;
 
   ///gtter List of examinations
   List<Examination> get availableExaminations => _availableExaminations;
@@ -72,6 +79,7 @@ mixin ExamModel on ConnectedExamModel {
     _availableExaminations = _availableSubjectList
         .firstWhere((subject) => subject.id == subjectId)
         .examinations;
+    _currentExamination = _availableExaminations.first;
     notifyListeners();
   }
 
@@ -102,12 +110,21 @@ mixin ExamModel on ConnectedExamModel {
 
   void nextQuestion() {
     print('Next Question');
-    int index = _availableQuestions
-        .indexWhere((question) => question.id == _currentQuestion.id);
+    if (_currentQuestion.id != _availableQuestions.last.id) {
+      int index = _availableQuestions
+          .indexWhere((question) => question.id == _currentQuestion.id);
 
-    final _question = _availableQuestions[index + 1];
+      final _question = _availableQuestions[index + 1];
 
-    if (_question != null) setQuestion = _question.id;
+      if (_question != null) setQuestion = _question.id;
+    } else {
+      chageExamStatus(ExamStatus.DONE);
+    }
+  }
+
+  void chageExamStatus(ExamStatus status) {
+    _availableExaminations.first.examStatus = status;
+    notifyListeners();
   }
 
   void previousQuestion() {

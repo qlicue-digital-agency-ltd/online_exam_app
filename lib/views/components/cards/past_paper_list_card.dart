@@ -7,7 +7,8 @@ class PastPaperListCard extends StatelessWidget {
   final Examination examination;
   final MainModel model;
 
-  const PastPaperListCard({Key key, @required this.examination, @required this.model})
+  const PastPaperListCard(
+      {Key key, @required this.examination, @required this.model})
       : super(key: key);
   @override
   Widget build(BuildContext context) {
@@ -17,7 +18,7 @@ class PastPaperListCard extends StatelessWidget {
             context,
             MaterialPageRoute(
                 builder: (BuildContext context) => PaperPage(
-                      examination: examination, model: model,
+                      model: model,
                     )));
       },
       child: Container(

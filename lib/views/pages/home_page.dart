@@ -83,8 +83,6 @@ class HomePage extends StatelessWidget {
                                     MaterialPageRoute(
                                         builder: (BuildContext context) =>
                                             PaperPage(
-                                              examination: model
-                                                  .availableExaminations.first,
                                               model: model,
                                             )));
                               }),
