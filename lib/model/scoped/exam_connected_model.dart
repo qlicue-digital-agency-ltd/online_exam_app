@@ -25,7 +25,7 @@ mixin SubjectModel on ConnectedExamModel {
     });
   }
 
-  Subject getSubjectById({@required subjectId}) {
+  Subject getSubjectById({@required int subjectId}) {
     Subject _subject;
     try {
       _subject = _availableSubjectList
@@ -74,6 +74,18 @@ mixin ExamModel on ConnectedExamModel {
   ///getter of list of results of a particular student
   List<Result> get availableResults => _availableResults;
 
+  ///Get examination by ID
+  Examination getExaminationById({@required int examId}) {
+    Examination _examination;
+    try {
+      _examination = _availableExaminations
+          .firstWhere((examination) => examination.id == examId);
+    } catch (e) {
+      print(e);
+    }
+    return _examination;
+  }
+
   ///setters
   set setAvailableExamination(int subjectId) {
     _availableExaminations = _availableSubjectList
@@ -101,9 +113,6 @@ mixin ExamModel on ConnectedExamModel {
     } catch (e) {
       print(e);
     }
-    print('+++++++++');
-    print(_question);
-    print('+++++++++');
     _currentQuestion = _question;
     notifyListeners();
   }

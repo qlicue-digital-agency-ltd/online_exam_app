@@ -36,7 +36,12 @@ class MyResultsCard extends StatelessWidget {
             ),
             Expanded(
                 child: Text(
-                    model.getSubjectById(subjectId: result.subjectId).name +
+                    model
+                            .getSubjectById(
+                                subjectId: model
+                                    .getExaminationById(examId: result.examId)
+                                    .subjectId)
+                            .name +
                         "\n" +
                         result.date,
                     style: TextStyle(

@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 class Result {
   final int id;
   final int examId;
-  final int subjectId;
+  final int studentId;
+  final int score;
   final int postion;
   final int candidates;
   final String date;
@@ -13,14 +14,16 @@ class Result {
       @required this.postion,
       @required this.candidates,
       @required this.examId,
-      @required this.subjectId,
+      @required this.score,
+      @required this.studentId,
       @required this.date});
 
   Map<String, dynamic> toMap() {
     var map = <String, dynamic>{
       'examination_id': examId,
-      'subject_id': subjectId,
+      'student_id': studentId,
       'code': postion,
+      'score': score,
       'candidates': candidates,
       'date': date,
     };
@@ -34,8 +37,9 @@ class Result {
       : assert(map['id'] != null),
         id = map['id'],
         examId = map['examination_id'],
-        subjectId = map['subject_id'],
+        studentId = map['student_id'],
         postion = map['postion'],
+        score = map['score'],
         candidates = map['candidates'],
         date = map['date'];
 }

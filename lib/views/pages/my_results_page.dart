@@ -13,16 +13,22 @@ class MyResultsPage extends StatelessWidget {
           appBar: AppBar(
             title: Text('My Results'),
           ),
-          body: ListView.builder(
-            itemCount: model.availableResults.length,
-            itemBuilder: (BuildContext context, int index) => Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: MyResultsCard(
-                result: model.availableResults[index],
-                model: model,
-              ),
-            ),
-          ),
+          body: model.availableResults.isNotEmpty
+              ? ListView.builder(
+                  itemCount: model.availableResults.length,
+                  itemBuilder: (BuildContext context, int index) => Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: MyResultsCard(
+                      result: model.availableResults[index],
+                      model: model,
+                    ),
+                  ),
+                )
+              : Container(
+                  child: Center(
+                    child: Text('You have no results yet'),
+                  ),
+                ),
         );
       },
     );
