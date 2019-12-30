@@ -5,13 +5,13 @@ class Result {
   final int examId;
   final int studentId;
   final int score;
-  final int postion;
+  final int position;
   final int candidates;
   final String date;
 
   Result(
       {@required this.id,
-      @required this.postion,
+      @required this.position,
       @required this.candidates,
       @required this.examId,
       @required this.score,
@@ -22,7 +22,7 @@ class Result {
     var map = <String, dynamic>{
       'examination_id': examId,
       'student_id': studentId,
-      'code': postion,
+      'position': position,
       'score': score,
       'candidates': candidates,
       'date': date,
@@ -38,8 +38,8 @@ class Result {
         id = map['id'],
         examId = map['examination_id'],
         studentId = map['student_id'],
-        postion = map['postion'],
+        position = map['position'],
         score = map['score'],
         candidates = map['candidates'],
-        date = map['date'];
+        date = map['created_at'].toString();
 }

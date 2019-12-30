@@ -161,4 +161,13 @@ mixin ExamModel on ConnectedExamModel {
     });
     notifyListeners();
   }
+
+  ///fetch Results from server
+  ///
+  fetchStudentsResults() {
+    _httpRequestProvider.getStudentsResults(studentId: 1).then((resultsList) {
+      _availableResults = resultsList;
+      notifyListeners();
+    });
+  }
 }

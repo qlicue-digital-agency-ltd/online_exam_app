@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:online_exam_app/model/result.dart';
 import 'package:online_exam_app/model/scoped/main.dart';
+import 'package:intl/intl.dart';
 
 class MyResultsCard extends StatelessWidget {
   final Result result;
@@ -36,14 +37,11 @@ class MyResultsCard extends StatelessWidget {
             ),
             Expanded(
                 child: Text(
-                    model
-                            .getSubjectById(
-                                subjectId: model
-                                    .getExaminationById(examId: result.examId)
-                                    .subjectId)
-                            .name +
+                    "name" +
                         "\n" +
-                        result.date,
+                        DateFormat('yyyy-MM-dd')
+                            .format(DateTime.parse(result.date))
+                            .toString(),
                     style: TextStyle(
                         fontSize: 15,
                         color: Colors.white,
@@ -52,7 +50,7 @@ class MyResultsCard extends StatelessWidget {
               padding: const EdgeInsets.all(8.0),
               child: Text(
                 "Position:\t" +
-                    result.postion.toString() +
+                    result.position.toString() +
                     '/' +
                     result.candidates.toString(),
                 style: TextStyle(

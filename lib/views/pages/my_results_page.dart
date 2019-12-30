@@ -4,7 +4,21 @@ import 'package:scoped_model/scoped_model.dart';
 
 import 'my_results_card.dart';
 
-class MyResultsPage extends StatelessWidget {
+class MyResultsPage extends StatefulWidget {
+  final MainModel model;
+
+  const MyResultsPage({Key key, @required this.model}) : super(key: key);
+  @override
+  _MyResultsPageState createState() => _MyResultsPageState();
+}
+
+class _MyResultsPageState extends State<MyResultsPage> {
+  @override
+  void initState() {
+    widget.model.fetchStudentsResults();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return ScopedModelDescendant(
