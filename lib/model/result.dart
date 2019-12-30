@@ -8,15 +8,18 @@ class Result {
   final int position;
   final int candidates;
   final String date;
+  final String subjectName;
 
-  Result(
-      {@required this.id,
-      @required this.position,
-      @required this.candidates,
-      @required this.examId,
-      @required this.score,
-      @required this.studentId,
-      @required this.date});
+  Result({
+    @required this.id,
+    @required this.position,
+    @required this.candidates,
+    @required this.examId,
+    @required this.score,
+    @required this.studentId,
+    @required this.date,
+    @required this.subjectName,
+  });
 
   Map<String, dynamic> toMap() {
     var map = <String, dynamic>{
@@ -26,6 +29,7 @@ class Result {
       'score': score,
       'candidates': candidates,
       'date': date,
+      'subject_name': subjectName,
     };
     if (id != null) {
       map['id'] = id;
@@ -41,5 +45,6 @@ class Result {
         position = map['position'],
         score = map['score'],
         candidates = map['candidates'],
+        subjectName = map['subject_name'],
         date = map['created_at'].toString();
 }

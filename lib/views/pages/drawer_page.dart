@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:online_exam_app/model/scoped/main.dart';
-import 'package:online_exam_app/views/pages/my_results_page.dart';
 import 'package:online_exam_app/views/pages/past_paper_page.dart';
 import 'package:online_exam_app/views/pages/rank_page.dart';
+import 'package:online_exam_app/views/pages/student_results_page.dart';
 import 'package:scoped_model/scoped_model.dart';
 
 class DrawerPage extends StatelessWidget {
@@ -57,7 +57,8 @@ class DrawerPage extends StatelessWidget {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (BuildContext context) => MyResultsPage(
+                              builder: (BuildContext context) =>
+                                  StudentResultsPage(
                                     model: model,
                                   )));
                     },

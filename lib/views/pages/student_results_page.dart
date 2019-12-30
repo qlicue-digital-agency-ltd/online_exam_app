@@ -1,18 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:online_exam_app/model/scoped/main.dart';
+import 'package:online_exam_app/views/components/cards/student_results_card.dart';
 import 'package:scoped_model/scoped_model.dart';
 
-import 'my_results_card.dart';
-
-class MyResultsPage extends StatefulWidget {
+class StudentResultsPage extends StatefulWidget {
   final MainModel model;
 
-  const MyResultsPage({Key key, @required this.model}) : super(key: key);
+  const StudentResultsPage({Key key, @required this.model}) : super(key: key);
   @override
-  _MyResultsPageState createState() => _MyResultsPageState();
+  _StudentResultsPageState createState() => _StudentResultsPageState();
 }
 
-class _MyResultsPageState extends State<MyResultsPage> {
+class _StudentResultsPageState extends State<StudentResultsPage> {
   @override
   void initState() {
     widget.model.fetchStudentsResults();
@@ -32,7 +31,7 @@ class _MyResultsPageState extends State<MyResultsPage> {
                   itemCount: model.availableResults.length,
                   itemBuilder: (BuildContext context, int index) => Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: MyResultsCard(
+                    child: StudentResultsCard(
                       result: model.availableResults[index],
                       model: model,
                     ),

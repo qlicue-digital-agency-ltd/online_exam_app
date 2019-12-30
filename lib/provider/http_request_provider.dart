@@ -62,7 +62,7 @@ class HttpRequestProvider {
           await http.get(api + 'results/' + studentId.toString());
       if (response.statusCode == 200) {
         final Map<String, dynamic> data = json.decode(response.body);
-        data['results']["ranks"].forEach((resData) {
+        data['results'].forEach((resData) {
           final _result = Result.fromMap(resData);
 
           _fetchedResults.add(_result);
