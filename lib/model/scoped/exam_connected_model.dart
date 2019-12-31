@@ -25,6 +25,30 @@ mixin SubjectModel on ConnectedExamModel {
     });
   }
 
+  String getSubjectAvatar({@required String code}) {
+    String _avatar;
+    switch (code) {
+      case 'AR':
+        _avatar = 'assets/icon/abacus.png';
+        break;
+      case 'MT':
+        _avatar = 'assets/icon/calculator.png';
+        break;
+      case 'ENG':
+        _avatar = 'assets/icon/books.png';
+        break;
+      case 'SCI':
+        _avatar = 'assets/icon/chemistry.png';
+        break;
+      case 'SW':
+        _avatar = 'assets/icon/book.png';
+        break;
+      default:
+        _avatar = 'assets/icon/bookshow.png';
+    }
+    return _avatar;
+  }
+
   Subject getSubjectById({@required int subjectId}) {
     Subject _subject;
     try {
@@ -182,7 +206,9 @@ mixin ResultModel on ConnectedExamModel {
   ///fetch Top 10 Student per exam
   ///
   fetchTopTenStudents({@required int examId}) {
-    _httpRequestProvider.getTopTenPerSubject(examId: examId).then((resultsList) {
+    _httpRequestProvider
+        .getTopTenPerSubject(examId: examId)
+        .then((resultsList) {
       _availableTopTen = resultsList;
       print(_availableTopTen);
       notifyListeners();

@@ -51,11 +51,17 @@ class HomePage extends StatelessWidget {
                     ),
                   ),
                   actions: <Widget>[
-                    IconButton(
-                      icon: const Icon(Icons.person),
-                      tooltip: 'Add new entry',
-                      onPressed: () {/* ... */},
-                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: InkWell(
+                        onTap: () {
+                          print('object');
+                        },
+                        child: CircleAvatar(
+                          backgroundImage: AssetImage('assets/icon/boy.png'),
+                        ),
+                      ),
+                    )
                   ]),
               SliverList(
                 delegate: SliverChildListDelegate([
@@ -74,7 +80,9 @@ class HomePage extends StatelessWidget {
                           padding: const EdgeInsets.all(8.0),
                           child: SubjectCard(
                               subject: model.availableSubjects[index],
-                              icon: 'assets/icon/books.png',
+                              icon: model.getSubjectAvatar(
+                                  code: model.availableSubjects[index].code
+                                      .toUpperCase()),
                               onTap: () {
                                 model.setAvailableExamination =
                                     model.availableSubjects[index].id;

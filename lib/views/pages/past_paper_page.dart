@@ -19,7 +19,7 @@ class PastPaperPage extends StatelessWidget {
                 gridDelegate: new SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 2, crossAxisSpacing: 5, mainAxisSpacing: 5),
                 itemBuilder: (BuildContext context, int index) => PastPaperCard(
-                      subject: model.availableSubjects[index],
+                      subject: model.availableSubjects[index], model: model,
                     )),
           ),
         );

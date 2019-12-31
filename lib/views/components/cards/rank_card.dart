@@ -9,7 +9,7 @@ class RankCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-          color: Colors.pink, borderRadius: BorderRadius.circular(15)),
+          color: Colors.green, borderRadius: BorderRadius.circular(15)),
       height: 80,
       child: Row(
         children: <Widget>[

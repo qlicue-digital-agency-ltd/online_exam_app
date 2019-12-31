@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:online_exam_app/model/scoped/main.dart';
 import 'package:online_exam_app/model/subject.dart';
 import 'package:online_exam_app/views/pages/past_paper_list_page.dart';
 
 class PastPaperCard extends StatelessWidget {
   final Subject subject;
+  final MainModel model;
 
-  const PastPaperCard({Key key, @required this.subject}) : super(key: key);
+  const PastPaperCard({Key key, @required this.subject, @required this.model})
+      : super(key: key);
   @override
   Widget build(BuildContext context) {
     return InkWell(
@@ -17,12 +20,13 @@ class PastPaperCard extends StatelessWidget {
                   ))),
       child: Card(
         elevation: 5,
-        color: Colors.pink,
+        color: Colors.green,
         child: Stack(
           children: <Widget>[
             Align(
                 alignment: Alignment.center,
-                child: Image.asset('assets/icon/books.png')),
+                child: Image.asset(
+                    model.getSubjectAvatar(code: subject.code.toUpperCase()))),
             Align(
                 alignment: Alignment.bottomCenter,
                 child: Padding(
@@ -42,9 +46,9 @@ class PastPaperCard extends StatelessWidget {
                 child: Chip(
                   label: Text(
                     '20',
-                    style: TextStyle(color: Colors.white),
+                    style: TextStyle(color: Colors.red),
                   ),
-                  backgroundColor: Colors.green,
+                  backgroundColor: Colors.white,
                 ),
               ),
             )
