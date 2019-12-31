@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:online_exam_app/model/student.dart';
 
 class Result {
   final int id;
@@ -9,17 +10,18 @@ class Result {
   final int candidates;
   final String date;
   final String subjectName;
+  final Student student;
 
-  Result({
-    @required this.id,
-    @required this.position,
-    @required this.candidates,
-    @required this.examId,
-    @required this.score,
-    @required this.studentId,
-    @required this.date,
-    @required this.subjectName,
-  });
+  Result(
+      {@required this.id,
+      @required this.position,
+      @required this.candidates,
+      @required this.examId,
+      @required this.score,
+      @required this.studentId,
+      @required this.date,
+      @required this.subjectName,
+      @required this.student});
 
   Map<String, dynamic> toMap() {
     var map = <String, dynamic>{
@@ -30,6 +32,7 @@ class Result {
       'candidates': candidates,
       'date': date,
       'subject_name': subjectName,
+      'student': student,
     };
     if (id != null) {
       map['id'] = id;
@@ -46,5 +49,7 @@ class Result {
         score = map['score'],
         candidates = map['candidates'],
         subjectName = map['subject_name'],
-        date = map['created_at'].toString();
+        date = map['created_at'].toString(),
+        student =
+            map['student'] != null ? Student.fromMap(map['student']) : null;
 }
