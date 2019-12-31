@@ -26,7 +26,9 @@ class DrawerPage extends StatelessWidget {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (BuildContext context) => RankPage()));
+                              builder: (BuildContext context) => RankPage(
+                                    model: model,
+                                  )));
                     },
                     leading: Icon(
                       Icons.filter_1,

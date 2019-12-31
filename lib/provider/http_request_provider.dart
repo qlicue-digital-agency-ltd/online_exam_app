@@ -73,4 +73,24 @@ class HttpRequestProvider {
     }
     return _fetchedResults;
   }
+
+  ///Gets All Top Ten ranks per exam from the server
+  Future<List<Result>> getTopTenPerSubject({@required int examId}) async {
+    List<Result> _fetchedResults = [];
+    try {
+      final http.Response response =
+          await http.get(api + 'ranks/' + examId.toString());
+      if (response.statusCode == 200) {
+        final Map<String, dynamic> data = json.decode(response.body);
+        data['ranks'].forEach((resData) {
+          final _result = Result.fromMap(resData);
+
+          _fetchedResults.add(_result);
+        });
+      }
+    } catch (e) {
+      print(e);
+    }
+    return _fetchedResults;
+  }
 }

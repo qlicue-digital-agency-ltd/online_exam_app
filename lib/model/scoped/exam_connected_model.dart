@@ -47,9 +47,6 @@ mixin ExamModel on ConnectedExamModel {
   ///list of answers of a particular question
   List<Answer> _availableAnswers = [];
 
-  ///list of results of a particular student
-  List<Result> _availableResults = [];
-
   ///current question
   Question _currentQuestion;
 
@@ -70,9 +67,6 @@ mixin ExamModel on ConnectedExamModel {
 
   ///getter of list of answers of a particular question
   List<Answer> get availableAnswers => _availableAnswers;
-
-  ///getter of list of results of a particular student
-  List<Result> get availableResults => _availableResults;
 
   ///Get examination by ID
   Examination getExaminationById({@required int examId}) {
@@ -161,12 +155,36 @@ mixin ExamModel on ConnectedExamModel {
     });
     notifyListeners();
   }
+}
+
+mixin ResultModel on ConnectedExamModel {
+  ///list of results of a particular student
+  List<Result> _availableResults = [];
+
+  ///list of top 10 students per subject
+  List<Result> _availableTopTen = [];
+
+  ///getter of list of results of a particular student
+  List<Result> get availableResults => _availableResults;
+
+  ///getter of top 10 students per subject
+  List<Result> get availableTopTen => _availableTopTen;
 
   ///fetch Results from server
   ///
   fetchStudentsResults() {
     _httpRequestProvider.getStudentsResults(studentId: 1).then((resultsList) {
       _availableResults = resultsList;
+      notifyListeners();
+    });
+  }
+
+  ///fetch Top 10 Student per exam
+  ///
+  fetchTopTenStudents({@required int examId}) {
+    _httpRequestProvider.getTopTenPerSubject(examId: examId).then((resultsList) {
+      _availableTopTen = resultsList;
+      print(_availableTopTen);
       notifyListeners();
     });
   }

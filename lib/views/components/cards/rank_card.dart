@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:online_exam_app/model/result.dart';
 
 class RankCard extends StatelessWidget {
-  final int rank;
+  final Result result;
 
-  const RankCard({Key key, @required this.rank}) : super(key: key);
+  const RankCard({Key key, @required this.result}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -15,7 +16,7 @@ class RankCard extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.all(10.0),
             child: Text(
-              rank.toString(),
+              result.position.toString(),
               style: TextStyle(
                   fontSize: 30,
                   color: Colors.white,
@@ -32,13 +33,16 @@ class RankCard extends StatelessWidget {
             width: 5,
           ),
           CircleAvatar(
-            backgroundImage: AssetImage('assets/icon/girl.png'),
+            backgroundImage: AssetImage(
+                result.student.gender.toLowerCase() == 'male'
+                    ? 'assets/icon/boy.png'
+                    : 'assets/icon/girl.png'),
           ),
           SizedBox(
             width: 5,
           ),
           Expanded(
-              child: Text("CICI MTOTO WAdsfdscds MOTO",
+              child: Text(result.student.name,
                   style: TextStyle(
                       fontSize: 15,
                       color: Colors.white,
@@ -46,7 +50,7 @@ class RankCard extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Text(
-              "90%",
+              result.score.toString() + "%",
               style: TextStyle(
                   fontSize: 20,
                   color: Colors.white,

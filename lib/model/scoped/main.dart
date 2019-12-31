@@ -8,4 +8,5 @@ class MainModel extends Model
         UtilityModel,
         LoginModel,
         ExamModel,
-        SubjectModel {}
+        SubjectModel,
+        ResultModel {}
