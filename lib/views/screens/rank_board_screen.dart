@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:online_exam_app/model/scoped/main.dart';
 import 'package:online_exam_app/views/components/cards/rank_card.dart';
+import 'package:online_exam_app/views/components/tiles/no_item.dart';
 import 'package:scoped_model/scoped_model.dart';
 
 class RankBoardScreen extends StatelessWidget {
@@ -22,7 +23,11 @@ class RankBoardScreen extends StatelessWidget {
               )
             : Container(
                 child: Center(
-                  child: Text('There are No Ranks at the Moment'),
+                  child: NoItemTile(
+                    icon: 'assets/icon/ranking.png',
+                    title: 'Hello!',
+                    subtitle: 'There are No Ranks at the Moment',
+                  ),
                 ),
               );
       },
