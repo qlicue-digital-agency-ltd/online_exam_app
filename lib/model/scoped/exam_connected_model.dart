@@ -6,15 +6,28 @@ import 'package:online_exam_app/model/question.dart';
 import 'package:online_exam_app/model/result.dart';
 import 'package:online_exam_app/model/subject.dart';
 import 'package:online_exam_app/provider/http_request_provider.dart';
+import 'package:online_exam_app/shared/shared_peference.dart';
 import 'package:scoped_model/scoped_model.dart';
 
 mixin ConnectedExamModel on Model {
   HttpRequestProvider _httpRequestProvider = HttpRequestProvider();
+
+  /// Shared preference DB
+  SharedPref _sharedPref = SharedPref();
   List<Subject> _availableSubjectList = [];
 
   List<Subject> get availableSubjects => _availableSubjectList;
 }
-mixin UtilityModel on ConnectedExamModel {}
+mixin UtilityModel on ConnectedExamModel {
+  bool _isNewToApp = true;
+  bool get isNewToApp {
+    _sharedPref.readBoolean('isNewToApp').then((status) {
+      _isNewToApp = status;
+    });
+
+    return _isNewToApp;
+  }
+}
 mixin LoginModel on ConnectedExamModel {}
 
 mixin SubjectModel on ConnectedExamModel {
