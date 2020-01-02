@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:online_exam_app/constants/routes.dart';
+import 'package:online_exam_app/views/pages/auth/login_page.dart';
 
 import 'package:online_exam_app/views/pages/home_page.dart';
 import 'package:online_exam_app/views/pages/onboarding_screen.dart';
@@ -14,6 +16,7 @@ class App extends StatefulWidget {
 
 class _AppState extends State<App> {
   final MainModel _model = MainModel();
+  bool _isAuthenticated = false;
 
   @override
   void initState() {
@@ -30,7 +33,11 @@ class _AppState extends State<App> {
         theme: ThemeData(
           primarySwatch: Colors.green,
         ),
-        home: OnboardingScreen(),
+        home: _model.isNewToApp ? OnboardingScreen() : HomePage(),
+        routes: {
+          landingPageRoute: (context) =>
+              _isAuthenticated ? HomePage() : LoginPage(),
+        },
       ),
       model: _model,
     );

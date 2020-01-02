@@ -27,6 +27,12 @@ mixin UtilityModel on ConnectedExamModel {
 
     return _isNewToApp;
   }
+
+  set setIsNewToAppStatus(bool status) {
+    _isNewToApp = status;
+    _sharedPref.saveBoolean('isNewToApp', status);
+    notifyListeners();
+  }
 }
 mixin LoginModel on ConnectedExamModel {}
 
