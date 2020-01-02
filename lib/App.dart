@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:online_exam_app/views/pages/home_page.dart';
+import 'package:online_exam_app/views/pages/onboarding_screen.dart';
 import 'package:scoped_model/scoped_model.dart';
 
 import 'model/scoped/main.dart';
@@ -29,7 +30,7 @@ class _AppState extends State<App> {
         theme: ThemeData(
           primarySwatch: Colors.green,
         ),
-        home: HomePage(),
+        home: OnboardingScreen(),
       ),
       model: _model,
     );
