@@ -4,7 +4,7 @@ import 'package:online_exam_app/model/scoped/main.dart';
 import 'package:online_exam_app/styles/style.dart';
 import 'package:scoped_model/scoped_model.dart';
 
-import 'home_page.dart';
+import 'auth/login_page.dart';
 
 class OnboardingScreen extends StatefulWidget {
   @override
@@ -225,7 +225,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                       Navigator.pushReplacement(
                           context,
                           MaterialPageRoute(
-                              builder: (BuildContext context) => HomePage()));
+                              builder: (BuildContext context) => LoginPage()));
                     },
                     child: Center(
                       child: Padding(

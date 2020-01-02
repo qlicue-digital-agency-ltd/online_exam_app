@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_country_picker/flutter_country_picker.dart';
 import 'package:online_exam_app/constants/enums.dart';
 import 'package:online_exam_app/model/answer.dart';
 import 'package:online_exam_app/model/examination.dart';
@@ -19,6 +20,7 @@ mixin ConnectedExamModel on Model {
   List<Subject> get availableSubjects => _availableSubjectList;
 }
 mixin UtilityModel on ConnectedExamModel {
+  Country _selectedCountry = Country.TZ;
   bool _isNewToApp = true;
   bool get isNewToApp {
     _sharedPref.readBoolean('isNewToApp').then((status) {
@@ -28,11 +30,19 @@ mixin UtilityModel on ConnectedExamModel {
     return _isNewToApp;
   }
 
+  Country get selectedCountry => _selectedCountry;
+
   set setIsNewToAppStatus(bool status) {
     _isNewToApp = status;
     _sharedPref.saveBoolean('isNewToApp', status);
     notifyListeners();
   }
+
+  set setSelectedCountry(Country country) {
+    _selectedCountry = country;
+    notifyListeners();
+  }
+  
 }
 mixin LoginModel on ConnectedExamModel {}
 
