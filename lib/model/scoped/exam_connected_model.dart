@@ -22,6 +22,28 @@ mixin ConnectedExamModel on Model {
 mixin UtilityModel on ConnectedExamModel {
   Country _selectedCountry = Country.TZ;
   bool _isNewToApp = true;
+  bool _isFront = true;
+
+  AnimationController _controllerFlipCard;
+
+  AnimationController get controllerFlipCard => _controllerFlipCard;
+  bool get isFront => _isFront;
+
+  set animationController(AnimationController animationController) {
+    _controllerFlipCard = animationController;
+    notifyListeners();
+  }
+
+  set flipCard(bool status) {
+    if (status)
+      _controllerFlipCard.forward();
+    else
+      _controllerFlipCard.reverse();
+
+    _isFront = !status;
+    notifyListeners();
+  }
+
   bool get isNewToApp {
     _sharedPref.readBoolean('isNewToApp').then((status) {
       _isNewToApp = status;
@@ -42,7 +64,6 @@ mixin UtilityModel on ConnectedExamModel {
     _selectedCountry = country;
     notifyListeners();
   }
-  
 }
 mixin LoginModel on ConnectedExamModel {}
 

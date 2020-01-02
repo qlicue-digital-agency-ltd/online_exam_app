@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:online_exam_app/model/scoped/main.dart';
+import 'package:online_exam_app/views/animations/flip_card.dart';
 import 'package:online_exam_app/views/components/cards/form_cards.dart';
+import 'package:online_exam_app/views/components/cards/sign_up_form_card.dart';
 import 'package:online_exam_app/views/components/icons/custom_icons.dart';
 import 'package:online_exam_app/views/components/icons/social_icon.dart';
 import 'package:scoped_model/scoped_model.dart';
@@ -14,6 +16,8 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  final GlobalKey<FlipCardState> animatedStateKey = GlobalKey<FlipCardState>();
+
   bool _isSelected = false;
 
   void _radio() {
@@ -98,65 +102,85 @@ class _LoginPageState extends State<LoginPage> {
                       SizedBox(
                         height: ScreenUtil.getInstance().setHeight(180),
                       ),
-                      FormCard(
-                        model: model,
+                      Container(
+                        constraints: BoxConstraints.expand(
+                            height: ScreenUtil.getInstance().setHeight(500)),
+                        child: FlipCard(
+                          key: animatedStateKey,
+                          front: SignInFormCard(
+                            rotatedTurnsValue: 0,
+                            model: model,
+                          ),
+                          back: SignUpFormCard(
+                            model: model,
+                          ),
+                          model: model,
+                        ),
                       ),
                       SizedBox(height: ScreenUtil.getInstance().setHeight(40)),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: <Widget>[
-                          Row(
-                            children: <Widget>[
-                              SizedBox(
-                                width: 12.0,
-                              ),
-                              GestureDetector(
-                                onTap: _radio,
-                                child: radioButton(_isSelected),
-                              ),
-                              SizedBox(
-                                width: 8.0,
-                              ),
-                              Text("Remember me",
-                                  style: TextStyle(
-                                      fontSize: 12,
-                                      fontFamily: "Poppins-Medium"))
-                            ],
-                          ),
-                          InkWell(
-                            child: Container(
-                              width: ScreenUtil.getInstance().setWidth(330),
-                              height: ScreenUtil.getInstance().setHeight(100),
-                              decoration: BoxDecoration(
-                                  gradient: LinearGradient(colors: [
-                                    Color(0xFF17ead9),
-                                    Colors.green
-                                  ]),
-                                  borderRadius: BorderRadius.circular(6.0),
-                                  boxShadow: [
-                                    BoxShadow(
-                                        color:
-                                            Color(0xFF6078ea).withOpacity(.3),
-                                        offset: Offset(0.0, 8.0),
-                                        blurRadius: 8.0)
-                                  ]),
-                              child: Material(
-                                color: Colors.transparent,
-                                child: InkWell(
-                                  onTap: () {
-                                    Navigator.pushReplacement(context,
-                                        MaterialPageRoute(
-                                            builder: (BuildContext context) {
-                                      return HomePage();
-                                    }));
-                                  },
-                                  child: Center(
-                                    child: Text("SIGNIN",
+                          model.isFront
+                              ? Row(
+                                  children: <Widget>[
+                                    SizedBox(
+                                      width: 12.0,
+                                    ),
+                                    GestureDetector(
+                                      onTap: _radio,
+                                      child: radioButton(_isSelected),
+                                    ),
+                                    SizedBox(
+                                      width: 8.0,
+                                    ),
+                                    Text("Remember me",
                                         style: TextStyle(
-                                            color: Colors.white,
-                                            fontFamily: "Poppins-Bold",
-                                            fontSize: 18,
-                                            letterSpacing: 1.0)),
+                                            fontSize: 12,
+                                            fontFamily: "Poppins-Medium")),
+                                    SizedBox(
+                                      width: 12.0,
+                                    ),
+                                  ],
+                                )
+                              : Container(),
+                          Expanded(
+                            child: InkWell(
+                              child: Container(
+                                width: ScreenUtil.getInstance().setWidth(330),
+                                height: ScreenUtil.getInstance().setHeight(100),
+                                decoration: BoxDecoration(
+                                    gradient: LinearGradient(colors: [
+                                      Color(0xFF17ead9),
+                                      Colors.green
+                                    ]),
+                                    borderRadius: BorderRadius.circular(6.0),
+                                    boxShadow: [
+                                      BoxShadow(
+                                          color:
+                                              Color(0xFF6078ea).withOpacity(.3),
+                                          offset: Offset(0.0, 8.0),
+                                          blurRadius: 8.0)
+                                    ]),
+                                child: Material(
+                                  color: Colors.transparent,
+                                  child: InkWell(
+                                    onTap: () {
+                                      Navigator.pushReplacement(context,
+                                          MaterialPageRoute(
+                                              builder: (BuildContext context) {
+                                        return HomePage();
+                                      }));
+                                    },
+                                    child: Center(
+                                      child: Text(
+                                          model.isFront ? "SIGNIN" : "SIGNUP",
+                                          style: TextStyle(
+                                              color: Colors.white,
+                                              fontFamily: "Poppins-Bold",
+                                              fontSize: 18,
+                                              letterSpacing: 1.0)),
+                                    ),
                                   ),
                                 ),
                               ),
@@ -218,12 +242,14 @@ class _LoginPageState extends State<LoginPage> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
                           Text(
-                            "New User? ",
+                            model.isFront ? "New User? " : "",
                             style: TextStyle(fontFamily: "Poppins-Medium"),
                           ),
                           InkWell(
-                            onTap: () {},
-                            child: Text("SignUp",
+                            onTap: () {
+                              model.flipCard = model.isFront;
+                            },
+                            child: Text(model.isFront ? "SignUp" : 'SignIn',
                                 style: TextStyle(
                                     color: Colors.green,
                                     fontFamily: "Poppins-Bold")),

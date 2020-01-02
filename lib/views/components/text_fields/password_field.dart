@@ -70,7 +70,6 @@ class _PasswordLabelTextfieldState extends State<PasswordLabelTextfield> {
             });
           },
         ),
-        border: InputBorder.none,
       ),
       validator: (value) {
         if (widget.message != null) {

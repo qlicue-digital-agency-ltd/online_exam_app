@@ -66,7 +66,13 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     Container(
                       alignment: Alignment.centerRight,
                       child: FlatButton(
-                        onPressed: () => print('Skip'),
+                        onPressed: () {
+                          setState(() {
+                            _currentPage = _numPages - 1;
+                            _pageController.jumpToPage(_currentPage);
+                            
+                          });
+                        },
                         child: Text(
                           'Skip',
                           style: TextStyle(
