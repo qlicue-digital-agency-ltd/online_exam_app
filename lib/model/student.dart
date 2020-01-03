@@ -57,3 +57,28 @@ class Student {
         regionId = map['region_id'],
         userId = map['user_id'];
 }
+
+List<Student> myStudents = <Student>[
+  Student(
+      id: 1,
+      age: 13,
+      districtId: 1,
+      gender: 'Male',
+      gradeId: 1,
+      image: null,
+      name: 'Robbyn Kalimwenjuma',
+      regionId: 1,
+      schoolName: 'Doris Primary School',
+      userId: 1),
+  Student(
+      id: 2,
+      age: 12,
+      districtId: 1,
+      gender: 'Female',
+      gradeId: 1,
+      image: null,
+      name: 'Diana Mtoto',
+      regionId: 1,
+      schoolName: 'Doris Primary School',
+      userId: 1)
+];

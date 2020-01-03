@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:online_exam_app/constants/routes.dart';
 import 'package:online_exam_app/views/pages/auth/login_page.dart';
-
-import 'package:online_exam_app/views/pages/home_page.dart';
 import 'package:online_exam_app/views/pages/onboarding_screen.dart';
+import 'package:online_exam_app/views/pages/students_page.dart';
 import 'package:scoped_model/scoped_model.dart';
 
 import 'model/scoped/main.dart';
@@ -49,10 +48,10 @@ class _AppState extends State<App> {
         ),
         home: _model.isNewToApp
             ? OnboardingScreen()
-            : _isAuthenticated ? HomePage() : LoginPage(),
+            : _isAuthenticated ? StudentPage() : LoginPage(),
         routes: {
           landingPageRoute: (context) =>
-              _isAuthenticated ? HomePage() : LoginPage(),
+              _isAuthenticated ? StudentPage() : LoginPage(),
         },
       ),
       model: _model,
