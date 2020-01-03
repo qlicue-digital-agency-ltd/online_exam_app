@@ -12,11 +12,21 @@ class StudentResultsCard extends StatelessWidget {
       : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return Card(
-      color: Colors.green,
-      elevation: 2,
+    return Container(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(6.0),
+          gradient: LinearGradient(colors: [
+            Colors.blue[300],
+            Colors.green,
+          ]),
+          boxShadow: [
+            BoxShadow(
+                color: Color(0xFF6078ea).withOpacity(.3),
+                offset: Offset(0.0, 8.0),
+                blurRadius: 8.0)
+          ]),
       child: ListTile(
-        onTap: (){
+        onTap: () {
           print('object');
         },
         leading: Chip(

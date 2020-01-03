@@ -6,8 +6,6 @@ import 'package:online_exam_app/model/scoped/main.dart';
 import 'package:online_exam_app/views/animations/flip_card.dart';
 import 'package:online_exam_app/views/components/cards/login_form_cards.dart';
 import 'package:online_exam_app/views/components/cards/sign_up_form_card.dart';
-import 'package:online_exam_app/views/components/icons/custom_icons.dart';
-import 'package:online_exam_app/views/components/icons/social_icon.dart';
 import 'package:scoped_model/scoped_model.dart';
 
 class LoginPage extends StatefulWidget {

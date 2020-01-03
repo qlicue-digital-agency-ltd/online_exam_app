@@ -16,10 +16,23 @@ class DrawerPage extends StatelessWidget {
             child: SingleChildScrollView(
               child: Column(
                 children: <Widget>[
-                  UserAccountsDrawerHeader(
-                    currentAccountPicture: Image.asset('assets/icon/boy.png'),
-                    accountEmail: Text('developer@qlicue.co.tz'),
-                    accountName: Text('John Poss'),
+                  Container(
+                    child: UserAccountsDrawerHeader(
+                      decoration: BoxDecoration(
+                          gradient: LinearGradient(colors: [
+                            Colors.blue[300],
+                            Colors.green,
+                          ]),
+                          boxShadow: [
+                            BoxShadow(
+                                color: Color(0xFF6078ea).withOpacity(.3),
+                                offset: Offset(0.0, 8.0),
+                                blurRadius: 8.0)
+                          ]),
+                      currentAccountPicture: Image.asset('assets/icon/boy.png'),
+                      accountEmail: Text('developer@qlicue.co.tz'),
+                      accountName: Text('John Poss'),
+                    ),
                   ),
                   ListTile(
                     onTap: () {

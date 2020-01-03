@@ -6,8 +6,13 @@ import 'package:online_exam_app/views/pages/past_paper_list_page.dart';
 class PastPaperCard extends StatelessWidget {
   final Subject subject;
   final MainModel model;
+  final int index;
 
-  const PastPaperCard({Key key, @required this.subject, @required this.model})
+  const PastPaperCard(
+      {Key key,
+      @required this.subject,
+      @required this.model,
+      @required this.index})
       : super(key: key);
   @override
   Widget build(BuildContext context) {
@@ -18,9 +23,19 @@ class PastPaperCard extends StatelessWidget {
               builder: (BuildContext context) => PastPaperListPage(
                     subject: subject,
                   ))),
-      child: Card(
-        elevation: 5,
-        color: Colors.green,
+      child: Container(
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(6.0),
+            gradient: LinearGradient(colors: [
+              index.isEven ? Colors.blue[300] : Colors.green,
+              index.isEven ? Colors.green : Colors.blue[300],
+            ]),
+            boxShadow: [
+              BoxShadow(
+                  color: Color(0xFF6078ea).withOpacity(.3),
+                  offset: Offset(0.0, 8.0),
+                  blurRadius: 8.0)
+            ]),
         child: Stack(
           children: <Widget>[
             Align(

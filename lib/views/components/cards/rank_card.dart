@@ -9,22 +9,52 @@ class RankCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-          color: Colors.green, borderRadius: BorderRadius.circular(15)),
+          borderRadius: BorderRadius.circular(6.0),
+          gradient: LinearGradient(colors: [
+            Color(0xFF17ead9),
+            Colors.green[700],
+          ]),
+          boxShadow: [
+            BoxShadow(
+                color: Color(0xFF6078ea).withOpacity(.3),
+                offset: Offset(0.0, 8.0),
+                blurRadius: 8.0)
+          ]),
       height: 80,
       child: Row(
         children: <Widget>[
+          SizedBox(
+            width: 10,
+          ),
           Padding(
             padding: const EdgeInsets.all(10.0),
-            child: Text(
-              result.position.toString(),
-              style: TextStyle(
-                  fontSize: 30,
-                  color: Colors.white,
-                  fontWeight: FontWeight.w600),
+            child: Center(
+              child: Container(
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(6.0),
+                    gradient: LinearGradient(
+                        colors: [Colors.green[700], Colors.green[300]]),
+                    boxShadow: [
+                      BoxShadow(
+                          color: Color(0xFF6078ea).withOpacity(.3),
+                          offset: Offset(0.0, 8.0),
+                          blurRadius: 8.0)
+                    ]),
+                width: 40,
+                height: 40,
+                child: Text(
+                  result.position.toString(),
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                      fontSize: 30,
+                      color: Colors.white,
+                      fontWeight: FontWeight.w600),
+                ),
+              ),
             ),
           ),
           SizedBox(
-            width: 20,
+            width: 5,
           ),
           VerticalDivider(
             color: Colors.white,
