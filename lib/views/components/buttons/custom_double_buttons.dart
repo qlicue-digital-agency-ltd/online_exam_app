@@ -28,9 +28,18 @@ class CustomDoubleButtons extends StatelessWidget {
               child: InkWell(
                 onTap: buttonOneTap,
                 child: Container(
-                  decoration: BoxDecoration(
-                      color: Colors.green[500],
-                      borderRadius: BorderRadius.circular(10)),
+                decoration: BoxDecoration(
+                         borderRadius: BorderRadius.circular(6.0),
+                          gradient: LinearGradient(colors: [
+                            Colors.green[300],
+                            Colors.green[700],
+                          ]),
+                          boxShadow: [
+                            BoxShadow(
+                                color: Color(0xFF6078ea).withOpacity(.3),
+                                offset: Offset(0.0, 8.0),
+                                blurRadius: 8.0)
+                          ]),
                   height: 50,
                   child: Center(
                       child: Text(
@@ -47,9 +56,18 @@ class CustomDoubleButtons extends StatelessWidget {
               child: InkWell(
                 onTap: buttonTwoTap,
                 child: Container(
-                  decoration: BoxDecoration(
-                      color: Colors.green[500],
-                      borderRadius: BorderRadius.circular(10)),
+                   decoration: BoxDecoration(
+                         borderRadius: BorderRadius.circular(6.0),
+                          gradient: LinearGradient(colors: [
+                            Colors.green[700],
+                            Colors.green[300],
+                          ]),
+                          boxShadow: [
+                            BoxShadow(
+                                color: Color(0xFF6078ea).withOpacity(.3),
+                                offset: Offset(0.0, 8.0),
+                                blurRadius: 8.0)
+                          ]),
                   height: 50,
                   child: Center(
                       child: Text(

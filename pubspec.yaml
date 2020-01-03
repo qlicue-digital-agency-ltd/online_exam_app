@@ -57,3 +57,11 @@ flutter:
     - family: Poppins-Medium
       fonts:
         - asset: assets/Poppins-Medium.ttf
+    
+    - family: Indie-Flower
+      fonts:
+        - asset: assets/fonts/IndieFlower-Regular.ttf
+
+    - family: LongCang
+      fonts:
+        - asset: assets/fonts/LongCang-Regular.ttf

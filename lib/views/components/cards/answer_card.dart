@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:online_exam_app/model/answer.dart';
 
-
 typedef AnswerCardOnTap = Function();
 
 class AnswerCard extends StatelessWidget {
@@ -21,12 +20,19 @@ class AnswerCard extends StatelessWidget {
         borderRadius: BorderRadius.all(Radius.circular(30)),
         child: Container(
           decoration: BoxDecoration(
-            border: Border.all(color: Colors.white),
-            color: answer.isSelected
-                ? Theme.of(context).primaryColor
-                : Colors.white,
-            borderRadius: BorderRadius.all(Radius.circular(30)),
-          ),
+              border: Border.all(color: Colors.white),
+              gradient: answer.isSelected
+                  ? LinearGradient(colors: [Color(0xFF17ead9), Colors.green])
+                  : LinearGradient(colors: [Colors.white, Colors.green]),
+              borderRadius: BorderRadius.all(
+                Radius.circular(30),
+              ),
+              boxShadow: [
+                BoxShadow(
+                    color: Color(0xFF6078ea).withOpacity(.3),
+                    offset: Offset(0.0, 8.0),
+                    blurRadius: 8.0)
+              ]),
           height: 60,
           child: Row(
             children: <Widget>[
@@ -56,7 +62,8 @@ class AnswerCard extends StatelessWidget {
                   answer.content,
                   style: TextStyle(
                       color: answer.isSelected ? Colors.white : Colors.black,
-                      fontWeight: FontWeight.w600),
+                      fontWeight: FontWeight.w600,
+                      fontSize: 20),
                 ),
               ),
               Container(

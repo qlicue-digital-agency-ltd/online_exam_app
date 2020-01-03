@@ -21,7 +21,15 @@ class SubjectCard extends StatelessWidget {
       child: Container(
         height: 80,
         decoration: BoxDecoration(
-            color: Colors.green[500], borderRadius: BorderRadius.circular(10)),
+            gradient: LinearGradient(colors: [Color(0xFF17ead9), Colors.green]),
+            borderRadius: BorderRadius.circular(6.0),
+            boxShadow: [
+              BoxShadow(
+                  color: Color(0xFF6078ea).withOpacity(.3),
+                  offset: Offset(0.0, 8.0),
+                  blurRadius: 8.0)
+            ]
+            ),
         child: Row(
           children: <Widget>[
             Expanded(

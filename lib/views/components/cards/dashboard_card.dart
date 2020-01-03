@@ -5,7 +5,17 @@ class DashboardCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-          color: Colors.red, borderRadius: BorderRadius.circular(10)),
+          borderRadius: BorderRadius.circular(6.0),
+          gradient: LinearGradient(colors: [
+            Colors.blue[300],
+            Colors.green,
+          ]),
+          boxShadow: [
+            BoxShadow(
+                color: Color(0xFF6078ea).withOpacity(.3),
+                offset: Offset(0.0, 8.0),
+                blurRadius: 8.0)
+          ]),
       height: 80,
       child: Row(
         children: <Widget>[
@@ -21,7 +31,8 @@ class DashboardCard extends StatelessWidget {
                   children: <Widget>[
                     Text(
                       'Test Taken',
-                      style: TextStyle(color: Colors.white),
+                      style: TextStyle(
+                          color: Colors.white, fontWeight: FontWeight.bold),
                     ),
                     Text('0',
                         style: TextStyle(color: Colors.white, fontSize: 20))
@@ -43,7 +54,8 @@ class DashboardCard extends StatelessWidget {
                   children: <Widget>[
                     Text(
                       'Average Marks',
-                      style: TextStyle(color: Colors.white),
+                      style: TextStyle(
+                          color: Colors.white, fontWeight: FontWeight.bold),
                     ),
                     Text('0 %',
                         style: TextStyle(color: Colors.white, fontSize: 20))

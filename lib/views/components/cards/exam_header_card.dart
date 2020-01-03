@@ -14,13 +14,13 @@ class ExamHeaderCard extends StatelessWidget {
           Expanded(
               child: Text(
             'Question: \t' + examination.questions.length.toString(),
-            style: TextStyle(fontSize: 15),
+            style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600),
           )),
           Expanded(
               child: Text(
             '0' + examination.duration.toString() + ':00 hrs',
             textAlign: TextAlign.end,
-            style: TextStyle(fontSize: 15),
+            style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600),
           ))
         ],
       ),

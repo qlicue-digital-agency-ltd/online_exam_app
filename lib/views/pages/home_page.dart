@@ -25,14 +25,20 @@ class HomePage extends StatelessWidget {
                     background: Stack(
                       fit: StackFit.expand,
                       children: <Widget>[
-                        // Container(
-                        //   height: _appBarHeight,
-                        //   decoration: BoxDecoration(
-                        //       color: Colors.green[500],
-                        //       borderRadius: BorderRadius.only(
-                        //           bottomLeft: Radius.circular(80),
-                        //           bottomRight: Radius.circular(80))),
-                        // ),
+                        Container(
+                          height: _appBarHeight,
+                          decoration: BoxDecoration(
+                              gradient: LinearGradient(colors: [
+                                Colors.blue[300],
+                                Colors.green,
+                              ]),
+                              boxShadow: [
+                                BoxShadow(
+                                    color: Color(0xFF6078ea).withOpacity(.3),
+                                    offset: Offset(0.0, 8.0),
+                                    blurRadius: 8.0)
+                              ]),
+                        ),
                         // This gradient ensures that the toolbar icons are distinct
                         // against the background image.
                         const DecoratedBox(
@@ -116,12 +122,21 @@ class HomePage extends StatelessWidget {
                     padding: const EdgeInsets.all(8.0),
                     child: Container(
                       decoration: BoxDecoration(
-                          color: Colors.green[500],
-                          borderRadius: BorderRadius.circular(10)),
+                         borderRadius: BorderRadius.circular(6.0),
+                          gradient: LinearGradient(colors: [
+                            Colors.blue[300],
+                            Colors.green,
+                          ]),
+                          boxShadow: [
+                            BoxShadow(
+                                color: Color(0xFF6078ea).withOpacity(.3),
+                                offset: Offset(0.0, 8.0),
+                                blurRadius: 8.0)
+                          ]),
                       height: 50,
                       child: Center(
                           child: Text(
-                        'Subscribe',
+                        'Subscribe'.toUpperCase(),
                         style: TextStyle(color: Colors.white),
                       )),
                     ),

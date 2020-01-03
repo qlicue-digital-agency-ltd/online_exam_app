@@ -55,8 +55,11 @@ class _PaperPageState extends State<PaperPage> {
                                   Divider(
                                     color: Colors.green,
                                   ),
-                                  QuestionCard(
-                                    question: model.currentQuestion,
+                                  Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: QuestionCard(
+                                      question: model.currentQuestion,
+                                    ),
                                   ),
                                   Divider(
                                     color: Colors.green,
