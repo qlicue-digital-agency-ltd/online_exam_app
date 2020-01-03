@@ -27,6 +27,7 @@ class _SignUpFormCardState extends State<SignUpFormCard> {
 
   final GlobalKey<FormFieldState> _formFieldKey = GlobalKey<FormFieldState>();
   String passwordText = '';
+    final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -122,5 +123,49 @@ class _SignUpFormCardState extends State<SignUpFormCard> {
         ),
       ),
     );
+  }
+
+  void _onSave(MainModel model) {
+    final _phone = model.selectedCountry.dialingCode +
+        _mobileEditingController.text
+            .replaceAll('(', '')
+            .replaceAll(')', '')
+            .replaceAll('-', '')
+            .replaceAll(' ', '');
+
+    if (_formKey.currentState.validate()) {
+      model
+          .signUpUser(
+        password: _passwordTextEditingController.text,
+        phone: _phone,
+      )
+          .then((value) {
+        if (value) {
+          _passwordTextEditingController.clear();
+
+          _mobileEditingController.clear();
+
+          _confirmPasswordTextEditingController.clear();
+
+          //show the snackbar
+          model.showInSnackBar(
+              color: Colors.white,
+              context: context,
+              icon: FontAwesomeIcons.checkCircle,
+              scaffoldKey: _scaffoldKey,
+              title: 'Admin created sucessfully');
+
+          Navigator.pushReplacementNamed(context, tokenPageRoute);
+        } else {
+          //show the snackbar
+          model.showInSnackBar(
+              color: Colors.red,
+              context: context,
+              icon: Icons.error,
+              scaffoldKey: _scaffoldKey,
+              title: 'Error while signing up');
+        }
+      });
+    }
   }
 }
