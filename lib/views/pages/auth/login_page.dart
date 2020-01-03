@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:online_exam_app/constants/routes.dart';
 import 'package:online_exam_app/model/scoped/main.dart';
 import 'package:online_exam_app/views/animations/flip_card.dart';
-import 'package:online_exam_app/views/components/cards/form_cards.dart';
+import 'package:online_exam_app/views/components/cards/login_form_cards.dart';
 import 'package:online_exam_app/views/components/cards/sign_up_form_card.dart';
 import 'package:online_exam_app/views/components/icons/custom_icons.dart';
 import 'package:online_exam_app/views/components/icons/social_icon.dart';
 import 'package:scoped_model/scoped_model.dart';
-
-import '../home_page.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -17,6 +17,7 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   final GlobalKey<FlipCardState> animatedStateKey = GlobalKey<FlipCardState>();
+  GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   bool _isSelected = false;
 
@@ -61,6 +62,7 @@ class _LoginPageState extends State<LoginPage> {
     return ScopedModelDescendant(
       builder: (BuildContext context, Widget child, MainModel model) {
         return Scaffold(
+          key: _scaffoldKey,
           backgroundColor: Colors.white,
           resizeToAvoidBottomPadding: true,
           body: Stack(
@@ -110,6 +112,7 @@ class _LoginPageState extends State<LoginPage> {
                           front: SignInFormCard(
                             rotatedTurnsValue: 0,
                             model: model,
+                            scaffoldKey: _scaffoldKey,
                           ),
                           back: SignUpFormCard(
                             model: model,
@@ -166,11 +169,9 @@ class _LoginPageState extends State<LoginPage> {
                                   color: Colors.transparent,
                                   child: InkWell(
                                     onTap: () {
-                                      Navigator.pushReplacement(context,
-                                          MaterialPageRoute(
-                                              builder: (BuildContext context) {
-                                        return HomePage();
-                                      }));
+                                      model.isFront
+                                          ? _onLoginUser(model: model)
+                                          : _onSignUpUser(model: model);
                                     },
                                     child: Center(
                                       child: Text(
@@ -265,5 +266,101 @@ class _LoginPageState extends State<LoginPage> {
         );
       },
     );
+  }
+
+  void _onSignUpUser({MainModel model}) {
+    final _phone = '+' +
+        model.selectedCountry.dialingCode +
+        model.mobileSignUpEditingController.text
+            .replaceAll('(', '')
+            .replaceAll(')', '')
+            .replaceAll('-', '')
+            .replaceAll(' ', '');
+
+    if (model.signUpFormKey.currentState.validate()) {
+      model
+          .authenticateUser(
+        password: model.passwordSignUpTextEditingController.text,
+        phone: _phone,
+        url: 'register',
+      )
+          .then((value) {
+        print('YYYYYYYYYYYY');
+        print(value);
+        print('XXXXXXXXXXXXXXXXXXXXXXXXXX');
+        if (value) {
+          model.passwordSignUpTextEditingController.clear();
+
+          model.mobileSignUpEditingController.clear();
+
+          model.confirmSignUpPasswordTextEditingController.clear();
+          model.flipCard = false;
+
+          //show the snackbar
+          model.showInSnackBar(
+              color: Colors.white,
+              context: context,
+              icon: FontAwesomeIcons.checkCircle,
+              scaffoldKey: _scaffoldKey,
+              title: 'User registration sucessful');
+
+          Navigator.pushReplacementNamed(context, landingPageRoute);
+        } else {
+          //show the snackbar
+          model.showInSnackBar(
+              color: Colors.red,
+              context: context,
+              icon: Icons.error,
+              scaffoldKey: _scaffoldKey,
+              title: 'Error while signing up');
+        }
+      });
+    }
+  }
+
+  void _onLoginUser({MainModel model}) {
+    final _phone = '+' +
+        model.selectedCountry.dialingCode +
+        model.mobileEditingController.text
+            .replaceAll('(', '')
+            .replaceAll(')', '')
+            .replaceAll('-', '')
+            .replaceAll(' ', '');
+
+    if (model.signInFormKey.currentState.validate()) {
+      model
+          .authenticateUser(
+        password: model.passwordTextEditingController.text,
+        phone: _phone,
+        url: 'login',
+      )
+          .then((value) {
+        print('YYYYYYYYYYYY');
+        print(value);
+        print('XXXXXXXXXXXXXXXXXXXXXXXXXX');
+        if (value) {
+          model.passwordTextEditingController.clear();
+          model.mobileEditingController.clear();
+
+          //show the snackbar
+          model.showInSnackBar(
+              color: Colors.white,
+              context: context,
+              icon: FontAwesomeIcons.checkCircle,
+              scaffoldKey: _scaffoldKey,
+              title: 'User Login sucessful');
+
+          Navigator.pushReplacementNamed(context, landingPageRoute);
+        } else {
+          //show the snackbar
+          model.showInSnackBar(
+              color: Colors.red,
+              context: context,
+              icon: Icons.error,
+              scaffoldKey: _scaffoldKey,
+              title: 'Error while signing in');
+        }
+      });
+    }
   }
 }

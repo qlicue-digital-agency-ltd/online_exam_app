@@ -20,6 +20,7 @@ dependencies:
   flutter_screenutil: ^0.4.2
   flutter_country_picker: ^0.1.4
   font_awesome_flutter: ^8.5.0
+  rxdart: ^0.22.3
 
 dev_dependencies:
   flutter_test:

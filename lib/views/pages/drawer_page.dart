@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:online_exam_app/constants/routes.dart';
 import 'package:online_exam_app/model/scoped/main.dart';
 import 'package:online_exam_app/views/pages/past_paper_page.dart';
 import 'package:online_exam_app/views/pages/rank_page.dart';
@@ -73,7 +74,10 @@ class DrawerPage extends StatelessWidget {
                   Divider(),
                   ListTile(
                     onTap: () {
-                      Navigator.pop(context);
+                      model.logout().then((onValue) {
+                        Navigator.pushReplacementNamed(
+                            context, landingPageRoute);
+                      });
                     },
                     leading: Icon(
                       Icons.exit_to_app,

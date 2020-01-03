@@ -8,7 +8,10 @@ import 'package:online_exam_app/model/result.dart';
 import 'package:online_exam_app/model/subject.dart';
 import 'package:online_exam_app/provider/http_request_provider.dart';
 import 'package:online_exam_app/shared/shared_peference.dart';
+import 'package:rxdart/rxdart.dart' as rxSubject;
 import 'package:scoped_model/scoped_model.dart';
+
+import '../user.dart';
 
 mixin ConnectedExamModel on Model {
   HttpRequestProvider _httpRequestProvider = HttpRequestProvider();
@@ -23,6 +26,30 @@ mixin UtilityModel on ConnectedExamModel {
   Country _selectedCountry = Country.TZ;
   bool _isNewToApp = true;
   bool _isFront = true;
+
+  ///login logic
+  FocusNode mobileFocusNode = FocusNode();
+  FocusNode passwordFocusNode = FocusNode();
+  TextEditingController mobileEditingController = TextEditingController();
+  TextEditingController passwordTextEditingController = TextEditingController();
+
+    final GlobalKey<FormState> signInFormKey = GlobalKey<FormState>();
+
+  ///end of login
+
+  //sign Up
+  FocusNode mobileSignUpFocusNode = FocusNode();
+  FocusNode passwordSignUpFocusNode = FocusNode();
+  FocusNode confirmPasswordSignUpFocusNode = FocusNode();
+
+  TextEditingController mobileSignUpEditingController = TextEditingController();
+  TextEditingController passwordSignUpTextEditingController =
+      TextEditingController();
+  TextEditingController confirmSignUpPasswordTextEditingController =
+      TextEditingController();
+  final GlobalKey<FormState> signUpFormKey = GlobalKey<FormState>();
+
+  //end of sigUp
 
   AnimationController _controllerFlipCard;
 
@@ -65,7 +92,96 @@ mixin UtilityModel on ConnectedExamModel {
     notifyListeners();
   }
 }
-mixin LoginModel on ConnectedExamModel {}
+mixin UserModel on ConnectedExamModel {
+  rxSubject.PublishSubject<bool> _userSubject =
+      rxSubject.PublishSubject<bool>();
+
+  ///authenicated user
+  User _authenicatedUser;
+
+  ///getters
+  rxSubject.PublishSubject<bool> get userSubject => _userSubject;
+  User get authenicatedUser => _authenicatedUser;
+
+  void _authenicate(User user) {
+    _userSubject.add(true);
+    _sharedPref.save('user', user.toMap());
+    _authenicatedUser = user;
+  }
+
+  /// sign up User
+  Future<bool> authenticateUser(
+      {@required String phone,
+      @required String password,
+      @required url}) async {
+    bool _isSignup = false;
+
+    final _user = User(id: 0, phone: phone, password: password);
+    await _httpRequestProvider
+        .authenticateUser(credentials: _user.toMap(), url: url)
+        .then((_userFromServer) {
+      print(_userFromServer);
+      if (_userFromServer != null) {
+        _isSignup = true;
+        _authenicate(_userFromServer);
+      }
+    });
+
+    notifyListeners();
+
+    return _isSignup;
+  }
+
+  ///auto authenicate
+  Future<bool> autoAuthenicate() async {
+    bool _isAuth = false;
+    try {
+      User _user = User.fromMap(await _sharedPref.read("user"));
+      _authenicatedUser = _user;
+      _isAuth = true;
+      notifyListeners();
+    } catch (Excepetion) {
+      _isAuth = false;
+    }
+    return _isAuth;
+  }
+
+  ///logout user
+  Future<void> logout() async {
+    _userSubject.add(false);
+    _sharedPref.remove('user');
+    notifyListeners();
+  }
+
+  ///snackbar
+  void showInSnackBar(
+      {@required BuildContext context,
+      @required GlobalKey<ScaffoldState> scaffoldKey,
+      @required String title,
+      @required IconData icon,
+      @required Color color}) {
+    FocusScope.of(context).requestFocus(FocusNode());
+    scaffoldKey.currentState?.removeCurrentSnackBar();
+    scaffoldKey.currentState.showSnackBar(SnackBar(
+      content: ListTile(
+        leading: Icon(
+          icon,
+          color: color,
+        ),
+        title: Text(
+          title,
+          textAlign: TextAlign.center,
+          style: TextStyle(
+            color: Colors.red,
+            fontSize: 16.0,
+          ),
+        ),
+      ),
+      backgroundColor: Theme.of(context).buttonColor,
+      duration: Duration(seconds: 3),
+    ));
+  }
+}
 
 mixin SubjectModel on ConnectedExamModel {
   initializeSubjects() {

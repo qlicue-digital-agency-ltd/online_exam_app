@@ -6,7 +6,7 @@ class MainModel extends Model
     with
         ConnectedExamModel,
         UtilityModel,
-        LoginModel,
+        UserModel,
         ExamModel,
         SubjectModel,
         ResultModel {}

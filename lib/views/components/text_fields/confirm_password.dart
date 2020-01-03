@@ -10,6 +10,7 @@ class ConfirmPasswordLabelTextfield extends StatefulWidget {
   final String message;
   final String password;
   final IconData prefixIcon;
+  final bool passMatch;
 
   final TextInputType keyboardType;
   final LabelTextfieldOnChange onChange;
@@ -31,7 +32,8 @@ class ConfirmPasswordLabelTextfield extends StatefulWidget {
       this.password,
       this.onChange,
       this.formFieldKey,
-      this.prefixIcon})
+      this.prefixIcon,
+      @required this.passMatch})
       : super(key: key);
 
   @override
@@ -42,6 +44,7 @@ class ConfirmPasswordLabelTextfield extends StatefulWidget {
 class _ConfirmPasswordLabelTextfieldState
     extends State<ConfirmPasswordLabelTextfield> {
   bool _isObscure = true;
+  bool _passwordMatch = false;
   @override
   Widget build(BuildContext context) {
     return TextFormField(
@@ -58,7 +61,9 @@ class _ConfirmPasswordLabelTextfieldState
         prefixIcon: widget.prefixIcon != null
             ? Icon(
                 widget.prefixIcon,
-                color: Theme.of(context).primaryColor,
+                color: _passwordMatch
+                    ? Theme.of(context).primaryColor
+                    : Colors.red,
               )
             : null,
         suffixIcon: InkWell(
@@ -77,9 +82,18 @@ class _ConfirmPasswordLabelTextfieldState
         print(value);
         print(widget.password);
         if (value != widget.password) {
+          setState(() {
+             _passwordMatch = false;
+          });
+          _passwordMatch = false;
           return "\t\t\t\t\t\t\t\t\t\t\t\t\t\t" + widget.message;
-        } else
+        } else {
+          setState(() {
+               _passwordMatch = true;
+          });
+       
           return null;
+        }
       },
     );
   }

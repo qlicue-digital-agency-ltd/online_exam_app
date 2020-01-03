@@ -5,6 +5,7 @@ import 'package:http/http.dart' as http;
 import 'package:online_exam_app/api/api.dart';
 import 'package:online_exam_app/model/result.dart';
 import 'package:online_exam_app/model/subject.dart';
+import 'package:online_exam_app/model/user.dart';
 
 class HttpRequestProvider {
   ///Subjects Queries
@@ -92,5 +93,25 @@ class HttpRequestProvider {
       print(e);
     }
     return _fetchedResults;
+  }
+
+  Future<User> authenticateUser({credentials, url}) async {
+    User _user;
+    Map<String, String> _headers = {"Content-Type": "application/json"};
+    try {
+      final http.Response response = await http.post(api + url,
+          body: json.encode(credentials), headers: _headers);
+
+      if (response.statusCode == 201 || response.statusCode == 200) {
+        final Map<String, dynamic> data = json.decode(response.body);
+        _user = User.fromMap(data);
+      }
+
+      print(response.statusCode);
+    } catch (e) {
+      print(e);
+    }
+
+    return _user;
   }
 }

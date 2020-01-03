@@ -20,6 +20,20 @@ class _AppState extends State<App> {
 
   @override
   void initState() {
+    //user authentication
+    _model.autoAuthenicate().then((status) {
+      setState(() {
+        _isAuthenticated = status;
+        print('++++++++++++++++++++++++++');
+        print(_isAuthenticated);
+        print('++++++++++++++++++++++++++');
+      });
+    });
+
+    _model.userSubject.listen((status) {
+      _isAuthenticated = status;
+    });
+
     _model.initializeSubjects();
     super.initState();
   }
@@ -33,7 +47,9 @@ class _AppState extends State<App> {
         theme: ThemeData(
           primarySwatch: Colors.green,
         ),
-        home: _model.isNewToApp ? OnboardingScreen() : HomePage(),
+        home: _model.isNewToApp
+            ? OnboardingScreen()
+            : _isAuthenticated ? HomePage() : LoginPage(),
         routes: {
           landingPageRoute: (context) =>
               _isAuthenticated ? HomePage() : LoginPage(),
