@@ -195,53 +195,6 @@ class _LoginPageState extends State<LoginPage> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
-                          horizontalLine(),
-                          Text("Social Login",
-                              style: TextStyle(
-                                  fontSize: 16.0,
-                                  fontFamily: "Poppins-Medium")),
-                          horizontalLine()
-                        ],
-                      ),
-                      SizedBox(
-                        height: ScreenUtil.getInstance().setHeight(40),
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          SocialIcon(
-                            colors: [
-                              Color(0xFF102397),
-                              Color(0xFF187adf),
-                              Color(0xFF00eaf8),
-                            ],
-                            iconData: CustomIcons.facebook,
-                            onPressed: () {},
-                          ),
-                          SocialIcon(
-                            colors: [
-                              Color(0xFFff4f38),
-                              Color(0xFFff355d),
-                            ],
-                            iconData: CustomIcons.googlePlus,
-                            onPressed: () {},
-                          ),
-                          SocialIcon(
-                            colors: [
-                              Color(0xFF17ead9),
-                              Color(0xFF6078ea),
-                            ],
-                            iconData: CustomIcons.twitter,
-                            onPressed: () {},
-                          ),
-                        ],
-                      ),
-                      SizedBox(
-                        height: ScreenUtil.getInstance().setHeight(30),
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
                           Text(
                             model.isFront ? "New User? " : "",
                             style: TextStyle(fontFamily: "Poppins-Medium"),
