@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:online_exam_app/api/api.dart';
 import 'package:online_exam_app/model/result.dart';
+import 'package:online_exam_app/model/student.dart';
 import 'package:online_exam_app/model/subject.dart';
 import 'package:online_exam_app/model/user.dart';
 
@@ -113,5 +114,26 @@ class HttpRequestProvider {
     }
 
     return _user;
+  }
+
+  ///Gets All Student associated with the guardian from the server
+  Future<List<Student>> getStudentsAssociatedWithTheGuardian(
+      {@required int userId}) async {
+    List<Student> _fetchedStudents = [];
+    try {
+      final http.Response response =
+          await http.get(api + 'students/' + userId.toString());
+      if (response.statusCode == 200) {
+        final Map<String, dynamic> data = json.decode(response.body);
+        data['students'].forEach((resData) {
+          final _result = Student.fromMap(resData);
+
+          _fetchedStudents.add(_result);
+        });
+      }
+    } catch (e) {
+      print(e);
+    }
+    return _fetchedStudents;
   }
 }

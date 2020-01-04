@@ -48,10 +48,10 @@ class _AppState extends State<App> {
         ),
         home: _model.isNewToApp
             ? OnboardingScreen()
-            : _isAuthenticated ? StudentPage() : LoginPage(),
+            : _isAuthenticated ? StudentPage(model: _model,) : LoginPage(),
         routes: {
           landingPageRoute: (context) =>
-              _isAuthenticated ? StudentPage() : LoginPage(),
+              _isAuthenticated ? StudentPage(model: _model,) : LoginPage(),
         },
       ),
       model: _model,

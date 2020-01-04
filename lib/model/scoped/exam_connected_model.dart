@@ -5,6 +5,7 @@ import 'package:online_exam_app/model/answer.dart';
 import 'package:online_exam_app/model/examination.dart';
 import 'package:online_exam_app/model/question.dart';
 import 'package:online_exam_app/model/result.dart';
+import 'package:online_exam_app/model/student.dart';
 import 'package:online_exam_app/model/subject.dart';
 import 'package:online_exam_app/provider/http_request_provider.dart';
 import 'package:online_exam_app/shared/shared_peference.dart';
@@ -33,7 +34,7 @@ mixin UtilityModel on ConnectedExamModel {
   TextEditingController mobileEditingController = TextEditingController();
   TextEditingController passwordTextEditingController = TextEditingController();
 
-    final GlobalKey<FormState> signInFormKey = GlobalKey<FormState>();
+  final GlobalKey<FormState> signInFormKey = GlobalKey<FormState>();
 
   ///end of login
 
@@ -377,6 +378,22 @@ mixin ResultModel on ConnectedExamModel {
         .then((resultsList) {
       _availableTopTen = resultsList;
       print(_availableTopTen);
+      notifyListeners();
+    });
+  }
+}
+mixin StudentModel on ConnectedExamModel {
+  ///list of students of a particular guardian
+  List<Student> _availableStudents = [];
+
+  ///getter of list of students of a particular guardian
+  List<Student> get availableStudents => _availableStudents;
+
+  fetchStudentsByGuardian() {
+    _httpRequestProvider
+        .getStudentsAssociatedWithTheGuardian(userId: 2)
+        .then((studentsList) {
+      _availableStudents = studentsList;
       notifyListeners();
     });
   }

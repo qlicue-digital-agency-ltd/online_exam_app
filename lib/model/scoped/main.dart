@@ -9,5 +9,5 @@ class MainModel extends Model
         UserModel,
         ExamModel,
         SubjectModel,
-        ResultModel {}
- 
+        ResultModel,
+        StudentModel {}
