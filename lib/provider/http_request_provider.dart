@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:online_exam_app/api/api.dart';
+import 'package:online_exam_app/model/grade.dart';
 import 'package:online_exam_app/model/result.dart';
 import 'package:online_exam_app/model/student.dart';
 import 'package:online_exam_app/model/subject.dart';
@@ -135,5 +136,24 @@ class HttpRequestProvider {
       print(e);
     }
     return _fetchedStudents;
+  }
+
+  ///Gets All Grades  from the server
+  Future<List<Grade>> getAllGrades() async {
+    List<Grade> _fetchedGrades = [];
+    try {
+      final http.Response response = await http.get(api + 'grades');
+      if (response.statusCode == 200) {
+        final Map<String, dynamic> data = json.decode(response.body);
+        data['grades'].forEach((resData) {
+          final _result = Grade.fromMap(resData);
+
+          _fetchedGrades.add(_result);
+        });
+      }
+    } catch (e) {
+      print(e);
+    }
+    return _fetchedGrades;
   }
 }

@@ -12,6 +12,7 @@ import 'package:online_exam_app/shared/shared_peference.dart';
 import 'package:rxdart/rxdart.dart' as rxSubject;
 import 'package:scoped_model/scoped_model.dart';
 
+import '../grade.dart';
 import '../user.dart';
 
 mixin ConnectedExamModel on Model {
@@ -394,6 +395,21 @@ mixin StudentModel on ConnectedExamModel {
         .getStudentsAssociatedWithTheGuardian(userId: 2)
         .then((studentsList) {
       _availableStudents = studentsList;
+      notifyListeners();
+    });
+  }
+}
+
+mixin GradeModel on ConnectedExamModel {
+  ///list of grades
+  List<Grade> _availableGrades = [];
+
+  ///getter of list of grades
+  List<Grade> get availableGrades => _availableGrades;
+
+  initializeGrades() {
+    _httpRequestProvider.getAllGrades().then((gradesList) {
+      _availableGrades = gradesList;
       notifyListeners();
     });
   }

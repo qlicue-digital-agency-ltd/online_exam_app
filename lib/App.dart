@@ -34,6 +34,7 @@ class _AppState extends State<App> {
     });
 
     _model.initializeSubjects();
+    _model.initializeGrades();
     super.initState();
   }
 
@@ -48,10 +49,17 @@ class _AppState extends State<App> {
         ),
         home: _model.isNewToApp
             ? OnboardingScreen()
-            : _isAuthenticated ? StudentPage(model: _model,) : LoginPage(),
+            : _isAuthenticated
+                ? StudentPage(
+                    model: _model,
+                  )
+                : LoginPage(),
         routes: {
-          landingPageRoute: (context) =>
-              _isAuthenticated ? StudentPage(model: _model,) : LoginPage(),
+          landingPageRoute: (context) => _isAuthenticated
+              ? StudentPage(
+                  model: _model,
+                )
+              : LoginPage(),
         },
       ),
       model: _model,
