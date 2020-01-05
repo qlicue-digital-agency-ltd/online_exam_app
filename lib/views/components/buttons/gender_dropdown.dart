@@ -1,20 +1,20 @@
 import 'package:flutter/material.dart';
-import 'package:online_exam_app/model/grade.dart';
+import 'package:online_exam_app/model/gender.dart';
 
-typedef GradeDropdownButtonOnChange = Function(Grade);
+typedef GenderDropdownButtonOnChange = Function(Gender);
 
-class GradeDropdown extends StatelessWidget {
-  final GradeDropdownButtonOnChange onChange;
-  final Grade value;
+class GenderDropdown extends StatelessWidget {
+  final GenderDropdownButtonOnChange onChange;
+  final Gender value;
 
   final String title;
-  final List<Grade> items;
+  final List<Gender> items;
 
-  const GradeDropdown(
+  const GenderDropdown(
       {Key key,
       @required this.value,
       @required this.items,
-      this.title = 'Grade\t',
+      this.title = 'Gender\t',
       @required this.onChange})
       : super(key: key);
   @override
@@ -53,17 +53,17 @@ class GradeDropdown extends StatelessWidget {
             child: DropdownButton(
               isExpanded: true,
               hint: Text(
-                '--- Select Grade ---',
+                '--- Select Gender ---',
                 overflow: TextOverflow.ellipsis,
               ),
               iconSize: 35,
               value: value,
               iconDisabledColor: Colors.red,
               iconEnabledColor: Colors.white,
-              items: items.map((grade) {
+              items: items.map((gender) {
                 return DropdownMenuItem(
-                  value: grade,
-                  child: Text(grade.name, style: TextStyle(color: Colors.black),),
+                  value: gender,
+                  child: Text(gender.name, style: TextStyle(color: Colors.black),),
                 );
               }).toList(),
               onChanged: (newValue) => onChange(newValue),

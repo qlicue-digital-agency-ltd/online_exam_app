@@ -35,6 +35,7 @@ class _AppState extends State<App> {
 
     _model.initializeSubjects();
     _model.initializeGrades();
+    _model.initializeGenders();
     super.initState();
   }
 

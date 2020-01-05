@@ -1,5 +1,8 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_country_picker/flutter_country_picker.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:online_exam_app/constants/enums.dart';
 import 'package:online_exam_app/model/answer.dart';
 import 'package:online_exam_app/model/examination.dart';
@@ -12,6 +15,7 @@ import 'package:online_exam_app/shared/shared_peference.dart';
 import 'package:rxdart/rxdart.dart' as rxSubject;
 import 'package:scoped_model/scoped_model.dart';
 
+import '../gender.dart';
 import '../grade.dart';
 import '../user.dart';
 
@@ -384,11 +388,27 @@ mixin ResultModel on ConnectedExamModel {
   }
 }
 mixin StudentModel on ConnectedExamModel {
+  File file;
+  File _pickedImage;
+
   ///list of students of a particular guardian
   List<Student> _availableStudents = [];
 
   ///getter of list of students of a particular guardian
   List<Student> get availableStudents => _availableStudents;
+
+  void chooseAmImage() async {
+    file = await ImagePicker.pickImage(source: ImageSource.gallery);
+    _pickedImage = file;
+// file = await ImagePicker.pickImage(source: ImageSource.gallery);
+    notifyListeners();
+  }
+
+  //get the choosen Image.
+
+  File get pickedImage {
+    return _pickedImage;
+  }
 
   fetchStudentsByGuardian() {
     _httpRequestProvider
@@ -401,16 +421,57 @@ mixin StudentModel on ConnectedExamModel {
 }
 
 mixin GradeModel on ConnectedExamModel {
+  //selected grade
+  Grade _selectedGrade;
+
   ///list of grades
   List<Grade> _availableGrades = [];
 
   ///getter of list of grades
   List<Grade> get availableGrades => _availableGrades;
 
+  ///getter for selected grade
+  Grade get selectedGrade => _selectedGrade;
+
+  ///setter for selecting a grade
+  set setSelectedGrade(Grade grade) {
+    _selectedGrade = grade;
+    notifyListeners();
+  }
+
   initializeGrades() {
     _httpRequestProvider.getAllGrades().then((gradesList) {
       _availableGrades = gradesList;
       notifyListeners();
     });
+  }
+}
+
+mixin GenderModel on ConnectedExamModel {
+  //selected grade
+  Gender _selectedGender;
+
+  ///list of genders
+  List<Gender> _availableGenders = [];
+
+  ///getter of list of genders
+  List<Gender> get availableGenders => _availableGenders;
+
+  ///getter for selected genders
+  Gender get selectedGender => _selectedGender;
+
+  ///setter for selecting a gender
+  set setSelectedGender(Gender gender) {
+    _selectedGender = gender;
+    notifyListeners();
+  }
+
+  initializeGenders() {
+    _availableGenders = genders;
+    notifyListeners();
+    // _httpRequestProvider.getAllGrades().then((gradesList) {
+    //   _availableGrades = gradesList;
+    //   notifyListeners();
+    // });
   }
 }

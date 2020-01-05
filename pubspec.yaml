@@ -21,6 +21,9 @@ dependencies:
   flutter_country_picker: ^0.1.4
   font_awesome_flutter: ^8.5.0
   rxdart: ^0.22.3
+  image_picker: ^0.6.0+9
+  dio: ^2.1.7
+  flutter_cupertino_date_picker: ^1.0.12
 
 dev_dependencies:
   flutter_test:

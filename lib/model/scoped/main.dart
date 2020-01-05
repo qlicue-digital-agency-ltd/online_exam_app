@@ -1,3 +1,4 @@
+
 import 'package:scoped_model/scoped_model.dart';
 
 import 'exam_connected_model.dart';
@@ -11,4 +12,5 @@ class MainModel extends Model
         SubjectModel,
         ResultModel,
         StudentModel,
-        GradeModel {}
+        GradeModel,
+        GenderModel{}
