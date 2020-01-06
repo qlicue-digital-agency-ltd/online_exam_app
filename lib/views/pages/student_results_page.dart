@@ -14,7 +14,8 @@ class StudentResultsPage extends StatefulWidget {
 class _StudentResultsPageState extends State<StudentResultsPage> {
   @override
   void initState() {
-    widget.model.fetchStudentsResults();
+    widget.model
+        .fetchStudentsResults(studentId: widget.model.authenticatedUser.id);
     super.initState();
   }
 

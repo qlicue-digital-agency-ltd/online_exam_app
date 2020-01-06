@@ -15,10 +15,11 @@ class HttpRequestProvider {
   ///Subjects Queries
 
   ///Gets All Subjects from the server
-  Future<List<Subject>> getSubjects() async {
+  Future<List<Subject>> getSubjects({@required int gradeId}) async {
     List<Subject> _fetchedSubjects = [];
     try {
-      final http.Response response = await http.get(api + 'subjects');
+      final http.Response response =
+          await http.get(api + 'subjects/' + gradeId.toString());
       if (response.statusCode == 200) {
         final Map<String, dynamic> data = json.decode(response.body);
         data['subjects'].forEach((subjectData) {
@@ -193,7 +194,7 @@ class HttpRequestProvider {
                 ))
         .then((response) {
       //   final Map<String, dynamic> data = json.decode(response.body);
-      final Map<String, dynamic> data =  json.decode(response.data);
+      final Map<String, dynamic> data = json.decode(response.data);
 
       if (response.statusCode == 201) {
         _student = Student.fromMap(data['student']);

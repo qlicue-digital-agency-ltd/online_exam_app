@@ -25,8 +25,26 @@ mixin ConnectedExamModel on Model {
   /// Shared preference DB
   SharedPref _sharedPref = SharedPref();
   List<Subject> _availableSubjectList = [];
+  List<Subject> _fetchedSubjectList = [];
 
   List<Subject> get availableSubjects => _availableSubjectList;
+
+  Future<bool> fetchStudentSubjects({@required int gradeId}) async {
+    bool _hasData = false;
+    try {
+      await _httpRequestProvider
+          .getSubjects(gradeId: gradeId)
+          .then((subjectList) {
+        _fetchedSubjectList = subjectList;
+        print(subjectList);
+        notifyListeners();
+      });
+      _hasData = true;
+    } catch (e) {
+      print(e);
+    }
+    return _hasData;
+  }
 }
 mixin UtilityModel on ConnectedExamModel {
   Country _selectedCountry = Country.TZ;
@@ -189,13 +207,6 @@ mixin UserModel on ConnectedExamModel {
 }
 
 mixin SubjectModel on ConnectedExamModel {
-  initializeSubjects() {
-    _httpRequestProvider.getSubjects().then((subjectList) {
-      _availableSubjectList = subjectList;
-      notifyListeners();
-    });
-  }
-
   String getSubjectAvatar({@required String code}) {
     String _avatar;
     switch (code) {
@@ -367,8 +378,10 @@ mixin ResultModel on ConnectedExamModel {
 
   ///fetch Results from server
   ///
-  fetchStudentsResults() {
-    _httpRequestProvider.getStudentsResults(studentId: 1).then((resultsList) {
+  fetchStudentsResults({@required int studentId}) {
+    _httpRequestProvider
+        .getStudentsResults(studentId: studentId)
+        .then((resultsList) {
       _availableResults = resultsList;
       notifyListeners();
     });
@@ -393,8 +406,14 @@ mixin StudentModel on ConnectedExamModel {
   ///list of students of a particular guardian
   List<Student> _availableStudents = [];
 
+  ///A selected student
+  Student _selectedStudent;
+
   ///getter of list of students of a particular guardian
   List<Student> get availableStudents => _availableStudents;
+
+  ///getter of selected student..
+  Student get selectedStudent => _selectedStudent;
 
   void chooseAmImage() async {
     file = await ImagePicker.pickImage(source: ImageSource.gallery);
@@ -407,6 +426,26 @@ mixin StudentModel on ConnectedExamModel {
 
   File get pickedImage {
     return _pickedImage;
+  }
+
+  ///setter for selected student
+  set setSelectedStudent(Student student) {
+    _selectedStudent = student;
+
+    fetchStudentSubjects(gradeId: _selectedStudent.gradeId).then((hasData) {
+      if (hasData) {
+        //shift this logic
+        if (_selectedStudent.gradeId == 1 || _selectedStudent.gradeId == 2) {
+          _availableSubjectList = List<Subject>.from(
+              _fetchedSubjectList.where((subject) => subject.id != 2));
+        } else {
+          _availableSubjectList = List<Subject>.from(
+              _fetchedSubjectList.where((subject) => subject.id != 1));
+        }
+      }
+    });
+
+    notifyListeners();
   }
 
   fetchStudentsByGuardian({@required int userId}) async {
@@ -465,6 +504,11 @@ mixin GradeModel on ConnectedExamModel {
   set setSelectedGrade(Grade grade) {
     _selectedGrade = grade;
     notifyListeners();
+  }
+
+  Grade getGradeById({@required int gradeId}) {
+    Grade _grade = _availableGrades.firstWhere((grade) => grade.id == gradeId);
+    return _grade;
   }
 
   initializeGrades() {

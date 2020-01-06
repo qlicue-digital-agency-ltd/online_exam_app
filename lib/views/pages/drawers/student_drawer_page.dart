@@ -6,7 +6,7 @@ import 'package:online_exam_app/views/pages/rank_page.dart';
 import 'package:online_exam_app/views/pages/student_results_page.dart';
 import 'package:scoped_model/scoped_model.dart';
 
-class DrawerPage extends StatelessWidget {
+class StudentDrawerPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ScopedModelDescendant(
@@ -29,9 +29,16 @@ class DrawerPage extends StatelessWidget {
                                 offset: Offset(0.0, 8.0),
                                 blurRadius: 8.0)
                           ]),
-                      currentAccountPicture: Image.asset('assets/icon/boy.png'),
-                      accountEmail: Text('developer@qlicue.co.tz'),
-                      accountName: Text('John Poss'),
+                      currentAccountPicture: CircleAvatar(
+                        backgroundImage: AssetImage(
+                            model.selectedStudent.gender.toLowerCase() == 'male'
+                                ? 'assets/icon/boy.png'
+                                : 'assets/icon/girl.png'),
+                      ),
+                      accountEmail: Text(model
+                          .getGradeById(gradeId: model.selectedStudent.gradeId)
+                          .name),
+                      accountName: Text(model.selectedStudent.name),
                     ),
                   ),
                   ListTile(
@@ -87,16 +94,13 @@ class DrawerPage extends StatelessWidget {
                   Divider(),
                   ListTile(
                     onTap: () {
-                      model.logout().then((onValue) {
-                        Navigator.pushReplacementNamed(
-                            context, landingPageRoute);
-                      });
+                      Navigator.pushReplacementNamed(context, landingPageRoute);
                     },
                     leading: Icon(
                       Icons.exit_to_app,
                       color: Colors.green,
                     ),
-                    title: Text('Logout'),
+                    title: Text('Log off'),
                   ),
                 ],
               ),

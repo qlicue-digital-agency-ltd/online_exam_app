@@ -1,22 +1,39 @@
 import 'package:flutter/material.dart';
 import 'package:online_exam_app/model/scoped/main.dart';
-
-import 'package:online_exam_app/views/components/cards/dashboard_card.dart';
-import 'package:online_exam_app/views/components/cards/subject_card.dart';
-import 'package:online_exam_app/views/pages/drawer_page.dart';
-import 'package:online_exam_app/views/pages/paper_page.dart';
+import 'package:online_exam_app/views/components/cards/student_card.dart';
+import 'package:online_exam_app/views/components/tiles/no_item.dart';
+import 'package:online_exam_app/views/pages/student_page.dart';
 import 'package:scoped_model/scoped_model.dart';
 
-class HomePage extends StatelessWidget {
+import 'create_student.dart';
+import 'drawers/parent_drawer_page.dart';
+
+class HomePage extends StatefulWidget {
+  final MainModel model;
+
+  const HomePage({Key key, @required this.model}) : super(key: key);
+  @override
+  _HomePageState createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
   final double _appBarHeight = 150.0;
   @override
+  void initState() {
+    widget.model
+        .fetchStudentsByGuardian(userId: widget.model.authenticatedUser.id);
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return ScopedModelDescendant(
-      builder: (BuildContext context, Widget child, MainModel model) {
-        return Scaffold(
-          body: CustomScrollView(
-            slivers: <Widget>[
-              SliverAppBar(
+    return Scaffold(
+      body: ScopedModelDescendant(
+        builder: (BuildContext context, Widget child, MainModel model) {
+          return RefreshIndicator(
+            child: CustomScrollView(
+              slivers: <Widget>[
+                SliverAppBar(
                   floating: true,
                   pinned: true,
                   expandedHeight: _appBarHeight,
@@ -57,99 +74,72 @@ class HomePage extends StatelessWidget {
                     ),
                   ),
                   actions: <Widget>[
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: InkWell(
-                        onTap: () {
-                          print('object');
-                        },
-                        child: CircleAvatar(
-                          backgroundImage: AssetImage('assets/icon/boy.png'),
-                        ),
-                      ),
+                    IconButton(
+                      tooltip: 'Add Student',
+                      icon: Icon(Icons.add),
+                      onPressed: () {
+                        Navigator.of(context).push(new MaterialPageRoute<Null>(
+                            builder: (BuildContext context) {
+                              return new CreateStudent();
+                            },
+                            fullscreenDialog: true));
+                      },
                     )
-                  ]),
-              SliverList(
-                delegate: SliverChildListDelegate([
-                  SizedBox(
-                    height: 20,
-                  ),
-                  Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: DashboardCard())
-                ]),
-              ),
-              model.availableSubjects.isNotEmpty
-                  ? SliverList(
-                      delegate: SliverChildBuilderDelegate((context, index) {
-                        return Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: SubjectCard(
-                              subject: model.availableSubjects[index],
-                              icon: model.getSubjectAvatar(
-                                  code: model.availableSubjects[index].code
-                                      .toUpperCase()),
-                              onTap: () {
-                                model.setAvailableExamination =
-                                    model.availableSubjects[index].id;
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (BuildContext context) =>
-                                            PaperPage(
-                                              model: model,
-                                            )));
-                              }),
-                        );
-                      }, childCount: model.availableSubjects.length),
-                    )
-                  : SliverList(
-                      delegate: SliverChildListDelegate([
-                        Container(
-                          child: Center(
-                            child: Text('Pulling data from server'),
-                          ),
-                        )
-                      ]),
-                    )
-            ],
-          ),
-          bottomNavigationBar: BottomAppBar(
-            child: Row(
-              children: <Widget>[
-                Expanded(
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Container(
-                      decoration: BoxDecoration(
-                         borderRadius: BorderRadius.circular(6.0),
-                          gradient: LinearGradient(colors: [
-                            Colors.blue[300],
-                            Colors.green,
-                          ]),
-                          boxShadow: [
-                            BoxShadow(
-                                color: Color(0xFF6078ea).withOpacity(.3),
-                                offset: Offset(0.0, 8.0),
-                                blurRadius: 8.0)
-                          ]),
-                      height: 50,
-                      child: Center(
-                          child: Text(
-                        'Subscribe'.toUpperCase(),
-                        style: TextStyle(color: Colors.white),
-                      )),
-                    ),
-                  ),
+                  ],
                 ),
+                SliverList(
+                  delegate: SliverChildListDelegate([
+                    SizedBox(
+                      height: 20,
+                    ),
+                    Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text('STUDENTS'))
+                  ]),
+                ),
+                model.availableStudents.isNotEmpty
+                    ? SliverList(
+                        delegate: SliverChildBuilderDelegate((context, index) {
+                          return Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: StudentCard(
+                              student: model.availableStudents[index],
+                              onTap: () {
+                                model.setSelectedStudent =
+                                    model.availableStudents[index];
+                                Navigator.pushReplacement(context,
+                                    MaterialPageRoute(
+                                        builder: (BuildContext context) {
+                                  return StudentPage();
+                                }));
+                              },
+                            ),
+                          );
+                        }, childCount: model.availableStudents.length),
+                      )
+                    : SliverList(
+                        delegate: SliverChildListDelegate([
+                         NoItemTile(
+                                icon: 'assets/icon/boy.png',
+                                title: 'Hello!',
+                                subtitle: 'Add a student',
+                              )
+                        ]),
+                      )
               ],
             ),
-          ),
-          drawer: Container(
-              width: MediaQuery.of(context).size.width * .85,
-              child: DrawerPage()),
-        );
-      },
+            onRefresh: () => _onRefresh(model),
+          );
+        },
+      ),
+      drawer: Container(
+          width: MediaQuery.of(context).size.width * .85,
+          child: ParentDrawerPage()),
     );
+  }
+
+  _onRefresh(MainModel model) async {
+    await model.fetchStudentsByGuardian(
+        userId: widget.model.authenticatedUser.id);
   }
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:online_exam_app/model/scoped/main.dart';
+import 'package:online_exam_app/views/components/tiles/no_item.dart';
 import 'package:online_exam_app/views/screens/rank_board_screen.dart';
 import 'package:scoped_model/scoped_model.dart';
 
@@ -16,15 +17,17 @@ class _RankPageState extends State<RankPage> {
   List<Widget> _screens = [];
   @override
   void initState() {
-    widget.model.availableSubjects.forEach((subject) {
-      _tabs.add(Tab(
-        text: subject.name,
-      ));
+    if (widget.model.availableSubjects.isNotEmpty) {
+      widget.model.availableSubjects.forEach((subject) {
+        _tabs.add(Tab(
+          text: subject.name,
+        ));
 
-      _screens.add(RankBoardScreen());
-       
-    });
-    onTap(0);
+        _screens.add(RankBoardScreen());
+      });
+      onTap(0);
+    }
+
     super.initState();
   }
 
@@ -32,28 +35,45 @@ class _RankPageState extends State<RankPage> {
   Widget build(BuildContext context) {
     return ScopedModelDescendant(
       builder: (BuildContext context, Widget child, MainModel model) {
-        return DefaultTabController(
-          child: Scaffold(
-            appBar: AppBar(
-              title: Text('Rank Board'),
-              bottom: TabBar(
-                onTap: onTap,
-                isScrollable: true,
-                tabs: _tabs,
-              ),
-            ),
-            body: TabBarView(
-              children: _screens,
-            ),
-          ),
-          length: model.availableSubjects.length,
-        );
+        return model.availableSubjects.isNotEmpty
+            ? DefaultTabController(
+                child: Scaffold(
+                  appBar: AppBar(
+                    title: Text('Rank Board'),
+                    bottom: TabBar(
+                      onTap: onTap,
+                      isScrollable:
+                          model.availableSubjects.length > 4 ? true : false,
+                      tabs: _tabs,
+                    ),
+                  ),
+                  body: TabBarView(
+                    children: _screens,
+                  ),
+                ),
+                length: model.availableSubjects.length,
+              )
+            : Scaffold(
+                appBar: AppBar(
+                  title: Text('Rank Board'),
+                ),
+                body: Center(
+                  child: NoItemTile(
+                    icon: 'assets/icon/ranking.png',
+                    title: 'Hello, ' + model.selectedStudent.name + '!',
+                    subtitle: 'There are no ranks for ' +
+                        model
+                            .getGradeById(
+                                gradeId: model.selectedStudent.gradeId)
+                            .name,
+                  ),
+                ),
+              );
       },
     );
   }
 
   void onTap(int index) {
-    print(index);
     print(widget.model.availableSubjects[index].examinations.first.id);
     widget.model.fetchTopTenStudents(
         examId: widget.model.availableSubjects[index].examinations.first.id);

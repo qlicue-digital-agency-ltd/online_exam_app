@@ -18,7 +18,8 @@ class NoItemTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: MediaQuery.of(context).size.height,
+      padding: EdgeInsets.all(10),
+      height: MediaQuery.of(context).size.height/ 3,
       child: Stack(
         children: <Widget>[
           Padding(
@@ -33,7 +34,7 @@ class NoItemTile extends StatelessWidget {
             child: RichText(
               textAlign: TextAlign.center,
               text: TextSpan(
-                style: TextStyle(color: Colors.black, fontSize: width / 20),
+                style: TextStyle(color: Colors.black54, fontSize: 20),
                 text: title,
                 children: <TextSpan>[
                   TextSpan(
