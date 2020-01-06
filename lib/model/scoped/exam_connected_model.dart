@@ -409,9 +409,9 @@ mixin StudentModel on ConnectedExamModel {
     return _pickedImage;
   }
 
-  fetchStudentsByGuardian() async {
+  fetchStudentsByGuardian({@required int userId}) async {
     await _httpRequestProvider
-        .getStudentsAssociatedWithTheGuardian(userId: 3)
+        .getStudentsAssociatedWithTheGuardian(userId: userId)
         .then((studentsList) {
       _availableStudents = studentsList;
       notifyListeners();

@@ -17,7 +17,8 @@ class StudentPage extends StatefulWidget {
 class _StudentPageState extends State<StudentPage> {
   @override
   void initState() {
-    widget.model.fetchStudentsByGuardian();
+    widget.model
+        .fetchStudentsByGuardian(userId: widget.model.authenticatedUser.id);
     super.initState();
   }
 
@@ -80,6 +81,7 @@ class _StudentPageState extends State<StudentPage> {
   }
 
   _onRefresh(MainModel model) async {
-    await model.fetchStudentsByGuardian();
+    await model.fetchStudentsByGuardian(
+        userId: widget.model.authenticatedUser.id);
   }
 }
