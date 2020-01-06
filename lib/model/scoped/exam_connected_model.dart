@@ -99,20 +99,19 @@ mixin UtilityModel on ConnectedExamModel {
   }
 }
 mixin UserModel on ConnectedExamModel {
+  ///authenicated user
+  User _authenticatedUser;
   rxSubject.PublishSubject<bool> _userSubject =
       rxSubject.PublishSubject<bool>();
 
-  ///authenicated user
-  User _authenicatedUser;
-
   ///getters
   rxSubject.PublishSubject<bool> get userSubject => _userSubject;
-  User get authenicatedUser => _authenicatedUser;
+  User get authenticatedUser => _authenticatedUser;
 
   void _authenicate(User user) {
     _userSubject.add(true);
     _sharedPref.save('user', user.toMap());
-    _authenicatedUser = user;
+    _authenticatedUser = user;
   }
 
   /// sign up User
@@ -143,7 +142,7 @@ mixin UserModel on ConnectedExamModel {
     bool _isAuth = false;
     try {
       User _user = User.fromMap(await _sharedPref.read("user"));
-      _authenicatedUser = _user;
+      _authenticatedUser = _user;
       _isAuth = true;
       notifyListeners();
     } catch (Excepetion) {
@@ -410,12 +409,41 @@ mixin StudentModel on ConnectedExamModel {
     return _pickedImage;
   }
 
-  fetchStudentsByGuardian() {
-    _httpRequestProvider
-        .getStudentsAssociatedWithTheGuardian(userId: 2)
+  fetchStudentsByGuardian() async {
+    await _httpRequestProvider
+        .getStudentsAssociatedWithTheGuardian(userId: 3)
         .then((studentsList) {
       _availableStudents = studentsList;
       notifyListeners();
+    });
+  }
+
+  postStudent({
+    @required String name,
+    @required String birthday,
+    @required String schoolName,
+    @required String gender,
+    @required int gradeId,
+    @required int userId,
+    @required int districtId,
+    @required int regionId,
+  }) async {
+    await _httpRequestProvider
+        .postStudent(
+            image: _pickedImage,
+            name: name,
+            birthday: birthday,
+            districtId: districtId,
+            gender: gender,
+            gradeId: gradeId,
+            regionId: regionId,
+            schoolName: schoolName,
+            userId: userId)
+        .then((student) {
+      if (student != null) {
+        _availableStudents.add(student);
+        notifyListeners();
+      }
     });
   }
 }

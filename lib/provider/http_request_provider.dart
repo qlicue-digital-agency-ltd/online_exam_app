@@ -1,5 +1,7 @@
 import 'dart:convert';
+import 'dart:io';
 
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:online_exam_app/api/api.dart';
@@ -117,6 +119,25 @@ class HttpRequestProvider {
     return _user;
   }
 
+  ///Gets All Grades  from the server
+  Future<List<Grade>> getAllGrades() async {
+    List<Grade> _fetchedGrades = [];
+    try {
+      final http.Response response = await http.get(api + 'grades');
+      if (response.statusCode == 200) {
+        final Map<String, dynamic> data = json.decode(response.body);
+        data['grades'].forEach((resData) {
+          final _result = Grade.fromMap(resData);
+
+          _fetchedGrades.add(_result);
+        });
+      }
+    } catch (e) {
+      print(e);
+    }
+    return _fetchedGrades;
+  }
+
   ///Gets All Student associated with the guardian from the server
   Future<List<Student>> getStudentsAssociatedWithTheGuardian(
       {@required int userId}) async {
@@ -138,22 +159,52 @@ class HttpRequestProvider {
     return _fetchedStudents;
   }
 
-  ///Gets All Grades  from the server
-  Future<List<Grade>> getAllGrades() async {
-    List<Grade> _fetchedGrades = [];
-    try {
-      final http.Response response = await http.get(api + 'grades');
-      if (response.statusCode == 200) {
-        final Map<String, dynamic> data = json.decode(response.body);
-        data['grades'].forEach((resData) {
-          final _result = Grade.fromMap(resData);
+  // post  students.
+  Future<Student> postStudent(
+      {@required String name,
+      @required int gradeId,
+      @required int districtId,
+      @required String birthday,
+      @required int regionId,
+      @required String gender,
+      @required String schoolName,
+      @required File image,
+      @required int userId}) async {
+    Dio dio = new Dio();
+    Student _student;
 
-          _fetchedGrades.add(_result);
-        });
-      }
-    } catch (e) {
-      print(e);
-    }
-    return _fetchedGrades;
+    FormData formdata = new FormData();
+    formdata.add("file", new UploadFileInfo(image, "image.jpeg"));
+    formdata.add("name", name);
+    formdata.add("grade_id", gradeId);
+    formdata.add("district_id", districtId);
+    formdata.add("birthday", birthday);
+    formdata.add("region_id", regionId);
+    formdata.add("gender", gender);
+    formdata.add("school_name", schoolName);
+    formdata.add("user_id", userId);
+
+    dio
+        .post(api + "student",
+            data: formdata,
+            options: Options(
+                method: 'POST',
+                responseType: ResponseType.json // or ResponseType.JSON
+                ))
+        .then((response) {
+      //   final Map<String, dynamic> data = json.decode(response.body);
+      final Map<String, dynamic> data =  json.decode(response.data);
+
+      if (response.statusCode == 201) {
+        _student = Student.fromMap(data['student']);
+      } else {}
+    }).catchError((error) {
+      print(error);
+    });
+
+    print('++++++++++++++++++++');
+    print(_student);
+    print('++++++++++++++++++++');
+    return _student;
   }
 }

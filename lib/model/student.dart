@@ -5,7 +5,7 @@ class Student {
   final String name;
   final String image;
   final String gender;
-  final int age;
+  final String birthday;
   final String schoolName;
   final int gradeId;
   final int districtId;
@@ -17,7 +17,7 @@ class Student {
     @required this.name,
     @required this.image,
     @required this.gender,
-    @required this.age,
+    @required this.birthday,
     @required this.schoolName,
     @required this.gradeId,
     @required this.districtId,
@@ -30,7 +30,7 @@ class Student {
       'name': name,
       'image': image,
       'gender': gender,
-      'age': age,
+      'birthday': birthday,
       'school_name': schoolName,
       'grade_id': gradeId,
       'district_id': districtId,
@@ -50,35 +50,10 @@ class Student {
         name = map['name'],
         image = map['image'],
         gender = map['gender'],
-        age = map['age'],
+        birthday = map['birthday'],
         schoolName = map['school_name'],
         gradeId = map['grade_id'],
         districtId = map['district_id'],
         regionId = map['region_id'],
         userId = map['user_id'];
 }
-
-List<Student> myStudents = <Student>[
-  Student(
-      id: 1,
-      age: 13,
-      districtId: 1,
-      gender: 'Male',
-      gradeId: 1,
-      image: null,
-      name: 'Robbyn Kalimwenjuma',
-      regionId: 1,
-      schoolName: 'Doris Primary School',
-      userId: 1),
-  Student(
-      id: 2,
-      age: 12,
-      districtId: 1,
-      gender: 'Female',
-      gradeId: 1,
-      image: null,
-      name: 'Diana Mtoto',
-      regionId: 1,
-      schoolName: 'Doris Primary School',
-      userId: 1)
-];

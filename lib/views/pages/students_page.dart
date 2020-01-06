@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:online_exam_app/model/scoped/main.dart';
-import 'package:online_exam_app/model/student.dart';
 import 'package:online_exam_app/views/components/cards/student_card.dart';
 import 'package:online_exam_app/views/components/tiles/no_item.dart';
 import 'package:online_exam_app/views/pages/create_student.dart';
@@ -45,23 +44,27 @@ class _StudentPageState extends State<StudentPage> {
         body: ScopedModelDescendant(
           builder: (BuildContext context, Widget child, MainModel model) {
             return model.availableStudents.isNotEmpty
-                ? ListView.builder(
-                    itemBuilder: (BuildContext context, int index) => index < 10
-                        ? Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: StudentCard(
-                              student: model.availableStudents[index],
-                              onTap: () {
-                                return Navigator.pushReplacement(context,
-                                    MaterialPageRoute(
-                                        builder: (BuildContext context) {
-                                  return HomePage();
-                                }));
-                              },
-                            ),
-                          )
-                        : Container(),
-                    itemCount: myStudents.length,
+                ? RefreshIndicator(
+                    child: ListView.builder(
+                      itemBuilder: (BuildContext context, int index) =>
+                          index < 10
+                              ? Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: StudentCard(
+                                    student: model.availableStudents[index],
+                                    onTap: () {
+                                      return Navigator.pushReplacement(context,
+                                          MaterialPageRoute(
+                                              builder: (BuildContext context) {
+                                        return HomePage();
+                                      }));
+                                    },
+                                  ),
+                                )
+                              : Container(),
+                      itemCount: model.availableStudents.length,
+                    ),
+                    onRefresh: () => _onRefresh(model),
                   )
                 : Container(
                     child: Center(
@@ -74,5 +77,9 @@ class _StudentPageState extends State<StudentPage> {
                   );
           },
         ));
+  }
+
+  _onRefresh(MainModel model) async {
+    await model.fetchStudentsByGuardian();
   }
 }

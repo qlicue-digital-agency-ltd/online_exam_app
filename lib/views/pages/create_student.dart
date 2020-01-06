@@ -29,6 +29,7 @@ class _CreateStudentState extends State<CreateStudent> {
       TextEditingController();
 
   final _formKey = GlobalKey<FormState>();
+  GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   String _format = 'yyyy-MMMM-dd';
 
@@ -42,6 +43,7 @@ class _CreateStudentState extends State<CreateStudent> {
     return ScopedModelDescendant(
       builder: (BuildContext context, Widget child, MainModel model) {
         return Scaffold(
+          key: _scaffoldKey,
           appBar: AppBar(
             title: Text('Add Student'),
           ),
@@ -70,7 +72,7 @@ class _CreateStudentState extends State<CreateStudent> {
                         },
                         child: CircleAvatar(
                           backgroundImage: model.pickedImage == null
-                              ? AssetImage('assets/icon/boy.png')
+                              ? AssetImage('assets/icon/male.jpg')
                               : FileImage(
                                   model.pickedImage,
                                 ),
@@ -167,7 +169,7 @@ class _CreateStudentState extends State<CreateStudent> {
                       padding: const EdgeInsets.all(8.0),
                       child: InkWell(
                         onTap: () {
-                          Navigator.pop(context);
+                          _save(model);
                         },
                         child: Container(
                           decoration: BoxDecoration(
@@ -231,5 +233,30 @@ class _CreateStudentState extends State<CreateStudent> {
         });
       },
     );
+  }
+
+  _save(MainModel model) {
+    if (_formKey.currentState.validate() &&
+        _birthday != null &&
+        model.selectedGender != null &&
+        model.selectedGrade != null) {
+      model.postStudent(
+          name: _nameEditingController.text,
+          birthday: _birthday.toString(),
+          schoolName: _schoolNameTextEditingController.text,
+          districtId: 1,
+          gender: model.selectedGender.name,
+          regionId: 1,
+          gradeId: model.selectedGrade.id,
+          userId: model.authenticatedUser.id);
+      Navigator.pop(context);
+    } else {
+      model.showInSnackBar(
+          color: Colors.red,
+          context: context,
+          icon: Icons.error,
+          scaffoldKey: _scaffoldKey,
+          title: 'Fill all required field');
+    }
   }
 }
