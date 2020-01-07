@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:online_exam_app/model/scoped/main.dart';
 import 'package:online_exam_app/views/components/buttons/custom_double_buttons.dart';
-import 'package:online_exam_app/views/components/cards/answer_card.dart';
+import 'package:online_exam_app/views/components/cards/answer_marking_scheme_card.dart';
 import 'package:online_exam_app/views/components/cards/exam_header_card.dart';
 import 'package:online_exam_app/views/components/cards/question_card.dart';
 import 'package:scoped_model/scoped_model.dart';
@@ -16,11 +16,7 @@ class MarkingSchemePage extends StatefulWidget {
 }
 
 class _MarkingSchemePageState extends State<MarkingSchemePage> {
-  @override
-  void initState() {
-    widget.model.setAvailableQuestions = widget.model.currentExamination.id;
-    super.initState();
-  }
+ 
 
   @override
   Widget build(BuildContext context) {
@@ -68,12 +64,9 @@ class _MarkingSchemePageState extends State<MarkingSchemePage> {
                   delegate: SliverChildBuilderDelegate((context, index) {
                     return Padding(
                       padding: const EdgeInsets.all(8.0),
-                      child: AnswerCard(
+                      child: AnswerMarkingSchemeCard(
                         answer: model.availableAnswers[index],
-                        onTap: () {
-                          model.setPreferredAnswer =
-                              model.availableAnswers[index].id;
-                        },
+                       
                       ),
                     );
                   }, childCount: model.availableAnswers.length),

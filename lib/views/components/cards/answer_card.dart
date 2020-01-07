@@ -6,6 +6,7 @@ typedef AnswerCardOnTap = Function();
 class AnswerCard extends StatelessWidget {
   final Answer answer;
   final AnswerCardOnTap onTap;
+
   const AnswerCard({
     Key key,
     @required this.answer,

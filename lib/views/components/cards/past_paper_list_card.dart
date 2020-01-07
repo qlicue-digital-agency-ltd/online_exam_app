@@ -2,9 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:online_exam_app/model/examination.dart';
 import 'package:online_exam_app/model/scoped/main.dart';
-import 'package:online_exam_app/views/pages/paper_page.dart';
-
-
+import 'package:online_exam_app/views/pages/past_papers/marking_scheme_page.dart';
 
 class PastPaperListCard extends StatelessWidget {
   final Examination examination;
@@ -17,10 +15,12 @@ class PastPaperListCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
+        model.setAvailableExamination = examination.subjectId;
+        model.setAvailableQuestions = examination.id;
         Navigator.push(
             context,
             MaterialPageRoute(
-                builder: (BuildContext context) => PaperPage(
+                builder: (BuildContext context) => MarkingSchemePage(
                       model: model,
                     )));
       },
