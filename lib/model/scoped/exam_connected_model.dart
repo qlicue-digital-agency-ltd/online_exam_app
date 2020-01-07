@@ -27,14 +27,24 @@ mixin ConnectedExamModel on Model {
   List<Subject> _availableSubjectList = [];
   List<Subject> _fetchedSubjectList = [];
 
-  int _totalSore;
+  ///list of examinations
+  List<Examination> _availableExaminations = [];
+  List<Examination> _availablePastPapers = [];
+
+  int _totalScore;
 
   List<Subject> get availableSubjects => _availableSubjectList;
+  List<Examination> get availablePastPapers => _availablePastPapers;
 
-  int get totalSore => _totalSore;
+  int get totalScore => _totalScore;
 
   set setTotalScore(int score) {
-    _totalSore = score;
+    _totalScore = score;
+    notifyListeners();
+  }
+
+  set setPastPapers(List<Examination> exams) {
+    _availablePastPapers = exams;
     notifyListeners();
   }
 
@@ -253,9 +263,6 @@ mixin SubjectModel on ConnectedExamModel {
   }
 }
 mixin ExamModel on ConnectedExamModel {
-  ///list of examinations
-  List<Examination> _availableExaminations = [];
-
   ///list of Questions of a particular exam
   List<Question> _availableQuestions = [];
 
@@ -297,7 +304,7 @@ mixin ExamModel on ConnectedExamModel {
 
   ///getter of list of Attempted Questions of a particular exam
 
-  Map<String, int>  getAttempedQuestions() {
+  Map<String, int> getAttempedQuestions() {
     Map<String, int> _map;
     int _count = 0;
     int _numberOfCorrectAnswers = 0;
@@ -427,6 +434,26 @@ mixin ResultModel on ConnectedExamModel {
     });
   }
 
+  List<Examination> getPastPapersOfASubject({@required int subjectId}) {
+    List<Examination> _pastPapers = [];
+
+    List<Examination> _filteredPastPapersBySubjectId = [];
+    _availableSubjectList.forEach((subject) {
+      subject.examinations.forEach((exam) {
+        _availableResults.forEach((result) {
+          if (exam.id == result.examId) {
+            _pastPapers.add(exam);
+          }
+        });
+      });
+    });
+
+    _filteredPastPapersBySubjectId = List<Examination>.from(
+        _pastPapers.where((paper) => paper.subjectId == subjectId));
+
+    return _filteredPastPapersBySubjectId;
+  }
+
   ///fetch Top 10 Student per exam
   ///
   fetchTopTenStudents({@required int examId}) {
@@ -437,6 +464,67 @@ mixin ResultModel on ConnectedExamModel {
       print(_availableTopTen);
       notifyListeners();
     });
+  }
+
+  ///check if the examination has been done by this student
+  Future<void> checkForExaminationVsStudentStatus(
+      {@required int examId, @required int studentId}) async {
+    _availableResults.forEach((result) {
+      if (result.examId == examId && result.studentId == studentId) {
+        _totalScore = result.score;
+        _availableExaminations
+            .firstWhere((exam) => exam.id == examId)
+            .examStatus = ExamStatus.CLOSED;
+        //change exam status
+        return;
+      }
+    });
+    notifyListeners();
+  }
+
+  ///post students results to server..
+  /// sign up User
+  Future<bool> postStudentResults(
+      {@required int examId,
+      @required int studentId,
+      @required int score}) async {
+    bool _isSuceess = false;
+    final _result = Result(
+      id: 0,
+      examId: examId,
+      score: score,
+      studentId: studentId,
+      candidates: null,
+      date: null,
+      position: null,
+      student: null,
+      subjectName: null,
+    );
+    await _httpRequestProvider
+        .postRankResult(credentials: _result.toMap())
+        .then((value) {
+      print(value);
+      _isSuceess = value;
+    });
+
+    notifyListeners();
+    return _isSuceess;
+  }
+
+  //average results
+  int averageResult() {
+    int avg = 0;
+    _availableResults.forEach((result) {
+      avg += result.score;
+    });
+    return (avg / _availableResults.length).round();
+  }
+
+  int getScoreByExamId({@required examId}) {
+    final _result =
+        _availableResults.firstWhere((result) => result.examId == examId);
+
+    return _result.score;
   }
 }
 mixin StudentModel on ConnectedExamModel {

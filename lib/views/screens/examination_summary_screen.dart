@@ -57,9 +57,19 @@ class ExaminationSummaryScreen extends StatelessWidget {
                 model.chageExamStatus(ExamStatus.OPENED);
               },
               buttonTwoTap: () {
-                model.chageExamStatus(ExamStatus.CLOSED);
-                model.setTotalScore = model.getAttempedQuestions()['score'];
-                print(model.getAttempedQuestions()['score']);
+                double _score = model.getAttempedQuestions()['score'] /
+                    model.availableQuestions.length *
+                    100;
+
+                model.setTotalScore = _score.round();
+                model
+                    .postStudentResults(
+                        examId: model.availableQuestions.first.examId,
+                        score: _score.round(),
+                        studentId: model.selectedStudent.id)
+                    .then((onValue) {
+                  model.chageExamStatus(ExamStatus.CLOSED);
+                });
               },
             ),
             SizedBox(

@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:online_exam_app/model/scoped/main.dart';
 import 'package:online_exam_app/model/subject.dart';
-import 'package:online_exam_app/views/pages/past_paper_list_page.dart';
+import 'package:online_exam_app/views/pages/past_papers/past_paper_list_page.dart';
+
 
 class PastPaperCard extends StatelessWidget {
   final Subject subject;
@@ -17,12 +18,17 @@ class PastPaperCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () => Navigator.push(
-          context,
-          MaterialPageRoute(
-              builder: (BuildContext context) => PastPaperListPage(
-                    subject: subject,
-                  ))),
+      onTap: () {
+        model.setPastPapers =
+            model.getPastPapersOfASubject(subjectId: subject.id);
+
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (BuildContext context) => PastPaperListPage(
+                      subject: subject,
+                    )));
+      },
       child: Container(
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(6.0),
@@ -60,7 +66,10 @@ class PastPaperCard extends StatelessWidget {
                 padding: const EdgeInsets.all(8.0),
                 child: Chip(
                   label: Text(
-                    '20',
+                    model
+                        .getPastPapersOfASubject(subjectId: subject.id)
+                        .length
+                        .toString(),
                     style: TextStyle(color: Colors.red),
                   ),
                   backgroundColor: Colors.white,

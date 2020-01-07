@@ -34,32 +34,6 @@ class HttpRequestProvider {
     return _fetchedSubjects;
   }
 
-  ///Gets my results.....
-  ///
-
-  // Future<List<Result>> getStudentsResults({@required studentId}) async {
-  //   List<Result> _fetchedResults = [];
-
-  //   try {
-  //     final http.Response response =
-  //         await http.get(api + 'results/' + studentId.toString());
-
-  //     if (response.statusCode == 200) {
-  //       final Map<String, dynamic> data = json.decode(response.body);
-  //       print(data['results']['ranks']);
-  //       // data['results']['ranks'].foreach((resultData) {
-  //       //   final _result = Result.fromMap(resultData);
-  //       //   _fetchedResults.add(_result);
-  //       // });
-
-  //     }
-  //   } catch (e) {
-  //     print(e);
-  //   }
-
-  //   return _fetchedResults;
-  // }
-
   ///Gets All Subjects from the server
   Future<List<Result>> getStudentsResults({@required int studentId}) async {
     List<Result> _fetchedResults = [];
@@ -100,6 +74,7 @@ class HttpRequestProvider {
     return _fetchedResults;
   }
 
+  ///signup and login user
   Future<User> authenticateUser({credentials, url}) async {
     User _user;
     Map<String, String> _headers = {"Content-Type": "application/json"};
@@ -207,5 +182,25 @@ class HttpRequestProvider {
     print(_student);
     print('++++++++++++++++++++');
     return _student;
+  }
+
+  ///Post result...
+  Future<bool> postRankResult({credentials}) async {
+    bool _isSuccessful = false;
+    Map<String, String> _headers = {"Content-Type": "application/json"};
+    try {
+      final http.Response response = await http.post(api + 'rank',
+          body: json.encode(credentials), headers: _headers);
+
+      if (response.statusCode == 201) {
+        _isSuccessful = true;
+      }
+
+      print(response.statusCode);
+    } catch (e) {
+      print(e);
+    }
+
+    return _isSuccessful;
   }
 }

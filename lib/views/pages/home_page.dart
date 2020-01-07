@@ -110,7 +110,9 @@ class _HomePageState extends State<HomePage> {
                                 Navigator.pushReplacement(context,
                                     MaterialPageRoute(
                                         builder: (BuildContext context) {
-                                  return StudentPage();
+                                  return StudentPage(
+                                    model: model,
+                                  );
                                 }));
                               },
                             ),
@@ -119,11 +121,11 @@ class _HomePageState extends State<HomePage> {
                       )
                     : SliverList(
                         delegate: SliverChildListDelegate([
-                         NoItemTile(
-                                icon: 'assets/icon/boy.png',
-                                title: 'Hello!',
-                                subtitle: 'Add a student',
-                              )
+                          NoItemTile(
+                            icon: 'assets/icon/boy.png',
+                            title: 'Hello!',
+                            subtitle: 'Add a student',
+                          )
                         ]),
                       )
               ],

@@ -18,11 +18,12 @@ class PastPaperListPage extends StatelessWidget {
             title: Text(subject.name),
           ),
           body: ListView.builder(
-            itemCount: subject.examinations.length,
+            itemCount: model.availablePastPapers.length,
             itemBuilder: (BuildContext context, int index) => Padding(
               padding: const EdgeInsets.all(8.0),
               child: PastPaperListCard(
-                examination: subject.examinations[index], model: model,
+                examination: model.availablePastPapers[index],
+                model: model,
               ),
             ),
           ),

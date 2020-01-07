@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+
 import 'package:online_exam_app/model/examination.dart';
 import 'package:online_exam_app/model/scoped/main.dart';
 import 'package:online_exam_app/views/pages/paper_page.dart';
+
+
 
 class PastPaperListCard extends StatelessWidget {
   final Examination examination;
@@ -30,7 +33,7 @@ class PastPaperListCard extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.all(10.0),
               child: Image.asset(
-                'assets/icon/abacus.png',
+                'assets/icon/book.png',
                 height: 40,
               ),
             ),
@@ -44,7 +47,7 @@ class PastPaperListCard extends StatelessWidget {
               width: 5,
             ),
             Expanded(
-                child: Text("SPE/2019/0001/MT",
+                child: Text(examination.examNo,
                     style: TextStyle(
                         fontSize: 15,
                         color: Colors.white,
@@ -52,7 +55,8 @@ class PastPaperListCard extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Text(
-                "90%",
+                model.getScoreByExamId(examId: examination.id).toString() +
+                    " %",
                 style: TextStyle(
                     fontSize: 20,
                     color: Colors.white,

@@ -98,7 +98,7 @@ class _PaperPageState extends State<PaperPage> {
                         )
                       : Container(),
                   model.currentExamination.examStatus == ExamStatus.CLOSED
-                      ? ResultBoardScren()
+                      ? ResultBoardScren(model: model,)
                       : Container()
                 ]),
               )

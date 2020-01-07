@@ -9,8 +9,23 @@ import 'package:scoped_model/scoped_model.dart';
 
 import 'drawers/student_drawer_page.dart';
 
-class StudentPage extends StatelessWidget {
+class StudentPage extends StatefulWidget {
+  final MainModel model;
+
+  const StudentPage({Key key, @required this.model}) : super(key: key);
+  @override
+  _StudentPageState createState() => _StudentPageState();
+}
+
+class _StudentPageState extends State<StudentPage> {
   final double _appBarHeight = 150.0;
+  @override
+  void initState() {
+    widget.model
+        .fetchStudentsResults(studentId: widget.model.selectedStudent.id);
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return ScopedModelDescendant(
@@ -82,7 +97,10 @@ class StudentPage extends StatelessWidget {
                   ),
                   Padding(
                       padding: const EdgeInsets.all(8.0),
-                      child: DashboardCard())
+                      child: DashboardCard(
+                        results: model.availableResults,
+                        model: model,
+                      ))
                 ]),
               ),
               model.availableSubjects.isNotEmpty
@@ -96,15 +114,24 @@ class StudentPage extends StatelessWidget {
                                   code: model.availableSubjects[index].code
                                       .toUpperCase()),
                               onTap: () {
+                                //step one.. set available exam
                                 model.setAvailableExamination =
                                     model.availableSubjects[index].id;
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (BuildContext context) =>
-                                            PaperPage(
-                                              model: model,
-                                            )));
+
+                                ///step two..  check whether the exam has been done by this student
+                                model
+                                    .checkForExaminationVsStudentStatus(
+                                        examId: model.currentExamination.id,
+                                        studentId: model.selectedStudent.id)
+                                    .then((onValue) {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (BuildContext context) =>
+                                              PaperPage(
+                                                model: model,
+                                              )));
+                                });
                               }),
                         );
                       }, childCount: model.availableSubjects.length),

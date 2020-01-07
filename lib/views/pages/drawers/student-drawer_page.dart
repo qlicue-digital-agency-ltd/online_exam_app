@@ -2,12 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:online_exam_app/constants/routes.dart';
 import 'package:online_exam_app/model/scoped/main.dart';
 import 'package:online_exam_app/views/pages/past_papers/past_paper_page.dart';
-
 import 'package:online_exam_app/views/pages/rank_page.dart';
 import 'package:online_exam_app/views/pages/student_results_page.dart';
 import 'package:scoped_model/scoped_model.dart';
 
-class StudentDrawerPage extends StatelessWidget {
+class DrawerPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ScopedModelDescendant(
@@ -30,16 +29,9 @@ class StudentDrawerPage extends StatelessWidget {
                                 offset: Offset(0.0, 8.0),
                                 blurRadius: 8.0)
                           ]),
-                      currentAccountPicture: CircleAvatar(
-                        backgroundImage: AssetImage(
-                            model.selectedStudent.gender.toLowerCase() == 'male'
-                                ? 'assets/icon/boy.png'
-                                : 'assets/icon/girl.png'),
-                      ),
-                      accountEmail: Text(model
-                          .getGradeById(gradeId: model.selectedStudent.gradeId)
-                          .name),
-                      accountName: Text(model.selectedStudent.name),
+                      currentAccountPicture: Image.asset('assets/icon/boy.png'),
+                      accountEmail: Text('developer@qlicue.co.tz'),
+                      accountName: Text('John Poss'),
                     ),
                   ),
                   ListTile(
@@ -95,13 +87,16 @@ class StudentDrawerPage extends StatelessWidget {
                   Divider(),
                   ListTile(
                     onTap: () {
-                      Navigator.pushReplacementNamed(context, landingPageRoute);
+                      model.logout().then((onValue) {
+                        Navigator.pushReplacementNamed(
+                            context, landingPageRoute);
+                      });
                     },
                     leading: Icon(
                       Icons.exit_to_app,
                       color: Colors.green,
                     ),
-                    title: Text('Log off'),
+                    title: Text('Logout'),
                   ),
                 ],
               ),

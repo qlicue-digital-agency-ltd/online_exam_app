@@ -1,6 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:online_exam_app/model/result.dart';
+import 'package:online_exam_app/model/scoped/main.dart';
 
 class DashboardCard extends StatelessWidget {
+  final List<Result> results;
+  final MainModel model;
+
+  const DashboardCard({Key key, @required this.results, @required this.model})
+      : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -34,7 +41,7 @@ class DashboardCard extends StatelessWidget {
                       style: TextStyle(
                           color: Colors.white, fontWeight: FontWeight.bold),
                     ),
-                    Text('0',
+                    Text(results.length.toString(),
                         style: TextStyle(color: Colors.white, fontSize: 20))
                   ],
                 ),
@@ -57,7 +64,10 @@ class DashboardCard extends StatelessWidget {
                       style: TextStyle(
                           color: Colors.white, fontWeight: FontWeight.bold),
                     ),
-                    Text('0 %',
+                    Text(
+                        model.availableResults.isNotEmpty
+                            ? model.averageResult().toString() + ' %'
+                            : "0" + ' %',
                         style: TextStyle(color: Colors.white, fontSize: 20))
                   ],
                 ),

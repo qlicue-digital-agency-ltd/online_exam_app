@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:online_exam_app/model/scoped/main.dart';
 
 class ResultBoardScren extends StatelessWidget {
+  final MainModel model;
+
+  const ResultBoardScren({Key key, @required this.model}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -19,10 +23,11 @@ class ResultBoardScren extends StatelessWidget {
             ),
             Text('Congrats!',
                 style: TextStyle(fontSize: 20, fontWeight: FontWeight.w400)),
+            Divider(),
             SizedBox(
               height: 10,
             ),
-            Text('90% Score',
+            Text(model.totalScore.toString() + '% Score',
                 style: TextStyle(
                     color: Colors.green,
                     fontSize: 40,
@@ -35,24 +40,35 @@ class ResultBoardScren extends StatelessWidget {
             SizedBox(
               height: 20,
             ),
-            RichText(
-              textAlign: TextAlign.center,
-              text: TextSpan(
-                text: 'You attempted 40 questions and from that ',
-                style:
-                    TextStyle(fontWeight: FontWeight.w600, color: Colors.black),
-                children: <TextSpan>[
-                  TextSpan(
-                      text: '35 answers',
-                      style: TextStyle(color: Colors.green)),
-                  TextSpan(text: ' are correct'),
-                ],
-              ),
+            Divider(
+              color: Theme.of(context).primaryColor,
+            ),
+            // RichText(
+            //   textAlign: TextAlign.center,
+            //   text: TextSpan(
+            //     text: 'You attempted 40 questions and from that ',
+            //     style:
+            //         TextStyle(fontWeight: FontWeight.w600, color: Colors.black),
+            //     children: <TextSpan>[
+            //       TextSpan(
+            //           text: '35 answers',
+            //           style: TextStyle(color: Colors.green)),
+            //       TextSpan(text: ' are correct'),
+            //     ],
+            //   ),
+            // ),
+            SizedBox(
+              height: 10,
+            ),
+            Text(
+              'Examination Date:\t ' + model.currentExamination.openingTime,
+              style: TextStyle(fontWeight: FontWeight.w600),
+              textAlign: TextAlign.start,
             ),
             SizedBox(
               height: 10,
             ),
-            Text('Examination Number.\t YUU2323MT',
+            Text('Examination Number:\t ' + model.currentExamination.examNo,
                 style: TextStyle(fontWeight: FontWeight.w600)),
             SizedBox(
               height: 80,
