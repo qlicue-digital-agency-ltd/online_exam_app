@@ -39,7 +39,9 @@ class ExaminationSummaryScreen extends StatelessWidget {
               height: 10,
             ),
             Text(
-              '40/50',
+              model.getAttempedQuestions()['count'].toString() +
+                  ' / ' +
+                  model.availableQuestions.length.toString(),
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
             ),
             SizedBox(
@@ -56,6 +58,8 @@ class ExaminationSummaryScreen extends StatelessWidget {
               },
               buttonTwoTap: () {
                 model.chageExamStatus(ExamStatus.CLOSED);
+                model.setTotalScore = model.getAttempedQuestions()['score'];
+                print(model.getAttempedQuestions()['score']);
               },
             ),
             SizedBox(

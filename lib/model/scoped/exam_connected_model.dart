@@ -27,7 +27,16 @@ mixin ConnectedExamModel on Model {
   List<Subject> _availableSubjectList = [];
   List<Subject> _fetchedSubjectList = [];
 
+  int _totalSore;
+
   List<Subject> get availableSubjects => _availableSubjectList;
+
+  int get totalSore => _totalSore;
+
+  set setTotalScore(int score) {
+    _totalSore = score;
+    notifyListeners();
+  }
 
   Future<bool> fetchStudentSubjects({@required int gradeId}) async {
     bool _hasData = false;
@@ -284,6 +293,37 @@ mixin ExamModel on ConnectedExamModel {
       print(e);
     }
     return _examination;
+  }
+
+  ///getter of list of Attempted Questions of a particular exam
+
+  Map<String, int>  getAttempedQuestions() {
+    Map<String, int> _map;
+    int _count = 0;
+    int _numberOfCorrectAnswers = 0;
+
+    _availableQuestions.forEach((question) {
+      question.answers.forEach((answer) {
+        if (answer.isSelected) {
+          _count++;
+        }
+
+        if (answer.isSelected && answer.isCorrect) {
+          _numberOfCorrectAnswers++;
+        }
+      });
+    });
+
+    print('++++++++++++++PPPPPPPPPPPP+++++++++++++++++++');
+    // setTotalScore = _numberOfCorrectAnswers;
+    print(_numberOfCorrectAnswers);
+    print('++++++++++++++VVVVVVVVVVVV+++++++++++++++++++');
+    _map = {
+      'count': _count,
+      'score': _numberOfCorrectAnswers,
+    };
+
+    return _map;
   }
 
   ///setters

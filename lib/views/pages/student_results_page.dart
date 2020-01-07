@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:online_exam_app/model/scoped/main.dart';
 import 'package:online_exam_app/views/components/cards/student_results_card.dart';
+import 'package:online_exam_app/views/components/tiles/no_item.dart';
 import 'package:scoped_model/scoped_model.dart';
 
 class StudentResultsPage extends StatefulWidget {
@@ -15,7 +16,7 @@ class _StudentResultsPageState extends State<StudentResultsPage> {
   @override
   void initState() {
     widget.model
-        .fetchStudentsResults(studentId: widget.model.authenticatedUser.id);
+        .fetchStudentsResults(studentId: widget.model.selectedStudent.id);
     super.initState();
   }
 
@@ -40,7 +41,11 @@ class _StudentResultsPageState extends State<StudentResultsPage> {
                 )
               : Container(
                   child: Center(
-                    child: Text('You have no results yet'),
+                    child: NoItemTile(
+                      icon: 'assets/icon/trophy.png',
+                      title: 'Hello, ' + model.selectedStudent.name,
+                      subtitle: 'There are no results for you. ',
+                    ),
                   ),
                 ),
         );
