@@ -69,7 +69,7 @@ class StudentDrawerPage extends StatelessWidget {
                                   PastPaperPage()));
                     },
                     leading: Icon(
-                      Icons.book,
+                      Icons.library_books,
                       color: Colors.green,
                     ),
                     title: Text('Past Papers'),
@@ -87,7 +87,7 @@ class StudentDrawerPage extends StatelessWidget {
                                   )));
                     },
                     leading: Icon(
-                      Icons.folder_open,
+                      Icons.notifications_active,
                       color: Colors.green,
                     ),
                     title: Text('My Results'),

@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:online_exam_app/constants/routes.dart';
 import 'package:online_exam_app/model/scoped/main.dart';
+import 'package:online_exam_app/views/pages/terms_condition.dart';
 import 'package:scoped_model/scoped_model.dart';
+
+import '../help_page.dart';
 
 class ParentDrawerPage extends StatelessWidget {
   @override
@@ -52,11 +55,10 @@ class ParentDrawerPage extends StatelessWidget {
                   ListTile(
                     onTap: () {
                       Navigator.pop(context);
-                      // Navigator.push(
-                      //     context,
-                      //     MaterialPageRoute(
-                      //         builder: (BuildContext context) =>
-                      //             PastPaperPage()));
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (BuildContext context) => HelpPage()));
                     },
                     leading: Icon(
                       Icons.help,
@@ -68,13 +70,11 @@ class ParentDrawerPage extends StatelessWidget {
                   ListTile(
                     onTap: () {
                       Navigator.pop(context);
-                      // Navigator.push(
-                      //     context,
-                      //     MaterialPageRoute(
-                      //         builder: (BuildContext context) =>
-                      //             StudentResultsPage(
-                      //               model: model,
-                      //             )));
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (BuildContext context) =>
+                                  TermConditionPage()));
                     },
                     leading: Icon(
                       Icons.blur_linear,
