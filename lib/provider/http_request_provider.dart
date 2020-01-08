@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:online_exam_app/api/api.dart';
 import 'package:online_exam_app/model/grade.dart';
+import 'package:online_exam_app/model/profile.dart';
 import 'package:online_exam_app/model/result.dart';
 import 'package:online_exam_app/model/student.dart';
 import 'package:online_exam_app/model/subject.dart';
@@ -182,6 +183,47 @@ class HttpRequestProvider {
     print(_student);
     print('++++++++++++++++++++');
     return _student;
+  }
+
+  // post  Profile.
+  Future<Profile> postProfile(
+      {@required String name,
+      @required String email,
+      @required String gender,
+      @required File image,
+      @required int userId}) async {
+    Dio dio = new Dio();
+    Profile _profile;
+
+    FormData formdata = new FormData();
+    formdata.add("file", new UploadFileInfo(image, "image.jpeg"));
+    formdata.add("name", name);
+    formdata.add("email", email);
+    formdata.add("gender", gender);
+    formdata.add("user_id", userId);
+
+    dio
+        .post(api + "profile",
+            data: formdata,
+            options: Options(
+                method: 'POST',
+                responseType: ResponseType.json // or ResponseType.JSON
+                ))
+        .then((response) {
+      //   final Map<String, dynamic> data = json.decode(response.body);
+      final Map<String, dynamic> data = json.decode(response.data);
+
+      if (response.statusCode == 201) {
+        _profile = Profile.fromMap(data['profile']);
+      } else {}
+    }).catchError((error) {
+      print(error);
+    });
+
+    print('++++++++++++++++++++');
+    print(_profile);
+    print('++++++++++++++++++++');
+    return _profile;
   }
 
   ///Post result...

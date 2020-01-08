@@ -6,6 +6,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:online_exam_app/constants/enums.dart';
 import 'package:online_exam_app/model/answer.dart';
 import 'package:online_exam_app/model/examination.dart';
+import 'package:online_exam_app/model/profile.dart';
 import 'package:online_exam_app/model/question.dart';
 import 'package:online_exam_app/model/result.dart';
 import 'package:online_exam_app/model/student.dart';
@@ -26,6 +27,10 @@ mixin ConnectedExamModel on Model {
   SharedPref _sharedPref = SharedPref();
   List<Subject> _availableSubjectList = [];
   List<Subject> _fetchedSubjectList = [];
+
+  ///image picker
+  File file;
+  File _pickedImage;
 
   ///list of examinations
   List<Examination> _availableExaminations = [];
@@ -222,6 +227,31 @@ mixin UserModel on ConnectedExamModel {
       backgroundColor: Theme.of(context).buttonColor,
       duration: Duration(seconds: 3),
     ));
+  }
+
+  ///user profile...
+  Future<Profile> postProfile({
+    @required String name,
+    @required String email,
+    @required String gender,
+    @required int userId,
+  }) async {
+    Profile _profile;
+
+    await _httpRequestProvider
+        .postProfile(
+            image: _pickedImage,
+            name: name,
+            gender: gender,
+            userId: userId,
+            email: email)
+        .then((profile) {
+      if (profile != null) {
+        _profile = _authenticatedUser.profile = profile;
+        notifyListeners();
+      }
+    });
+    return _profile;
   }
 }
 
@@ -528,9 +558,6 @@ mixin ResultModel on ConnectedExamModel {
   }
 }
 mixin StudentModel on ConnectedExamModel {
-  File file;
-  File _pickedImage;
-
   ///list of students of a particular guardian
   List<Student> _availableStudents = [];
 

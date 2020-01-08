@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:online_exam_app/constants/routes.dart';
 import 'package:online_exam_app/model/scoped/main.dart';
 import 'package:online_exam_app/views/pages/terms_condition.dart';
+import 'package:online_exam_app/views/pages/user_profile.dart';
 import 'package:scoped_model/scoped_model.dart';
 
 import '../help_page.dart';
@@ -38,16 +39,16 @@ class ParentDrawerPage extends StatelessWidget {
                   ListTile(
                     onTap: () {
                       Navigator.pop(context);
-                      // Navigator.push(
-                      //     context,
-                      //     MaterialPageRoute(
-                      //         builder: (BuildContext context) => RankPage(
-                      //               model: model,
-                      //             )));
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (BuildContext context) => UserProfile(
+                                    model: model,
+                                  )));
                     },
                     leading: Icon(
                       Icons.person_outline,
-                      color: Colors.green,
+                      color: Colors.orange,
                     ),
                     title: Text('Profile'),
                   ),
@@ -62,7 +63,7 @@ class ParentDrawerPage extends StatelessWidget {
                     },
                     leading: Icon(
                       Icons.help,
-                      color: Colors.green,
+                      color: Colors.yellow[700],
                     ),
                     title: Text('Help'),
                   ),
@@ -78,9 +79,18 @@ class ParentDrawerPage extends StatelessWidget {
                     },
                     leading: Icon(
                       Icons.blur_linear,
-                      color: Colors.green,
+                      color: Colors.blue,
                     ),
                     title: Text('Terms & Conditions'),
+                  ),
+                  Divider(),
+                  ListTile(
+                    onTap: () {},
+                    leading: Icon(
+                      Icons.settings,
+                      color: Colors.green,
+                    ),
+                    title: Text('Settings'),
                   ),
                   Divider(),
                   ListTile(
@@ -92,7 +102,7 @@ class ParentDrawerPage extends StatelessWidget {
                     },
                     leading: Icon(
                       Icons.exit_to_app,
-                      color: Colors.green,
+                      color: Colors.red,
                     ),
                     title: Text('Logout'),
                   ),

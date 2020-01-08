@@ -70,7 +70,7 @@ class StudentDrawerPage extends StatelessWidget {
                     },
                     leading: Icon(
                       Icons.library_books,
-                      color: Colors.green,
+                      color: Colors.blue,
                     ),
                     title: Text('Past Papers'),
                   ),
@@ -88,7 +88,7 @@ class StudentDrawerPage extends StatelessWidget {
                     },
                     leading: Icon(
                       Icons.notifications_active,
-                      color: Colors.green,
+                      color: Colors.orange,
                     ),
                     title: Text('My Results'),
                   ),
@@ -99,7 +99,7 @@ class StudentDrawerPage extends StatelessWidget {
                     },
                     leading: Icon(
                       Icons.exit_to_app,
-                      color: Colors.green,
+                      color: Colors.red,
                     ),
                     title: Text('Log off'),
                   ),
